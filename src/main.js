@@ -4,7 +4,7 @@ import router from './router'
 import ToastService from "primevue/toastservice";
 import PrimeVue from "primevue/config";
 // PrimeVue Material Design Theme
-import "primevue/resources/themes/md-light-indigo/theme.css";
+import "primevue/resources/themes/saga-orange/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -34,7 +34,6 @@ createApp(App)
     .component('pv-textarea', Textarea)
     .component('pv-button', Button)
     .component('pv-row', Row)
-    .component('pv-sidebar', Sidebar)
     .component('pv-menu', Menu)
     .component('pv-dialog', Dialog)
     .component('pv-toast', Toast)
