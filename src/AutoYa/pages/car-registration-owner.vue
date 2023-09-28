@@ -107,7 +107,9 @@ export default {
           <div class="button-container">
             <Button label="SUBIR FOTOS" class="custom-button2">SUBIR FOTOS</button>
             <div class="button-space"></div>
-            <Button label="CREAR CONTRATO DE ALQUILER" class="custom-button3">CREAR CONTRATO DE ALQUILER</Button>
+            <router-link to="/rent-contract-owner">
+              <Button label="CREAR CONTRATO DE ALQUILER" class="custom-button3">CREAR CONTRATO DE ALQUILER</Button>
+            </router-link>
           </div>
         </template>
       </Card>

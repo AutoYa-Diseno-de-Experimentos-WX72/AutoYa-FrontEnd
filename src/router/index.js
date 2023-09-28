@@ -6,6 +6,7 @@ import RentTenant from "@/AutoYa/pages/rent-tenant.vue";
 import ProfileOwner from "@/AutoYa/pages/profile-owner.vue";
 import ProfileTenant from "@/AutoYa/pages/profile-tenant.vue";
 import RequestsTenant from "@/AutoYa/pages/requests-tenant.vue";
+import RentContractOwner from "@/AutoYa/pages/rent-contract-owner.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +49,11 @@ const router = createRouter({
       path: '/requests-tenant',
       name: '/requests-tenant',
       component: RequestsTenant,
+    },
+    {
+      path: '/rent-contract-owner',
+      name: '/rent-contract-owner',
+      component: RentContractOwner,
     }
   ]
 })
