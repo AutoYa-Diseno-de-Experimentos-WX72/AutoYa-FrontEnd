@@ -1,17 +1,17 @@
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
 <script>
 export default {
-  data() {
-    return {
-      drawer: false,
-      items: [
-        { label: "Home", to: "/home" },
-        { label: "About", to: "/about" },
-        { label: "Registro", to: "/car-registration-owner" },
-      ],
-    };
+  name:"App",
+  components: {
   },
 };
 </script>
-<template>
-  <RouterView />
-</template>
+
+<style scoped>
+
+</style>
