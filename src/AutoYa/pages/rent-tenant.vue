@@ -5,9 +5,10 @@ export default {
       drawer: false,
       items: [
         { label: "Inicio", to: "/home" },
-        { label: "Registro", to: "/car-registration-owner" },
-        { label: "Notificaciones", to: "/about" },
-        { label: "Alquiler", to: "/rent-tenant" },
+        { label: "Buscar Autos", to: "/car-registration-owner" },
+        { label: "Mantenimiento", to: "/about" },
+        { label: "Alquiler", to: "/about" },
+        { label: "Solicitudes", to: "/about" },
       ],
     };
   },
