@@ -54,8 +54,6 @@ export default {
       </template>
     </pv-toolbar>
   </header>
-
-
 </template>
 
 <style>
