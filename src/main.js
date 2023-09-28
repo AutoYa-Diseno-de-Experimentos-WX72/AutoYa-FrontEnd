@@ -16,8 +16,8 @@ import InputText from "primevue/inputtext";
 import Textarea from "primevue/textarea";
 import Button from "primevue/button";
 import Row from "primevue/row";
-import Sidebar from "primevue/sidebar";
 import Menu from "primevue/menu";
+import Icons from 'primeicons/primeicons.css'
 import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 import Dropdown from "primevue/dropdown";
@@ -35,6 +35,7 @@ createApp(App)
     .component('pv-button', Button)
     .component('pv-row', Row)
     .component('pv-menu', Menu)
+    .component('pv-icons', Icons)
     .component('pv-dialog', Dialog)
     .component('pv-toast', Toast)
     .component('pv-dropdown', Dropdown)

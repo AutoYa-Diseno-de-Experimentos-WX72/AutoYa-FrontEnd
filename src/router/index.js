@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Inicio from "@/propie/inicio-propie.vue";
+import Inicio from "@/arrenda/inicio-arrenda.vue";
 import NotificacionesPropie from "@/propie/notificaciones-propie.vue";
 
 const router = createRouter({

@@ -33,7 +33,7 @@
 
 <script>
 export default{
-  name: "Inicio",
+  name: "InicioPropie",
 };
 </script>
 
