@@ -35,9 +35,16 @@ const logoUrl = computed(() => {
                             <div class="flex align-items-center">
                                 <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
                             </div>
-                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">Olvidaste tu contraseña?</a>
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">¿No estas registrado? Crea una cuenta</a>
                         </div>
                         <pv-button label="Iniciar Sesion" class="w-full p-3 text-xl"></pv-button>
+
+                        <div class="TipoLoginUsuario">
+                            <pv-button label="Ingresar como Arrendatario"></pv-button>
+                            <pv-button label="Ingresar como Propietario"></pv-button>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -76,6 +83,17 @@ const logoUrl = computed(() => {
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 6px;
+}
+
+.TipoLoginUsuario{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.TipoLoginUsuario .p-button {
+    background-color: black;
+    color: white;
 }
 
 </style>
