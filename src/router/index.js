@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import carRegistrationOwner from "@/AutoYa/pages/car-registration-owner.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -7,10 +8,6 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: HomeView,
-    },
-    {
-      path: '/',
-      redirect: 'home'
     },
     {
       path: '/about',
@@ -26,6 +23,10 @@ const router = createRouter({
       path: '/rent-tenant',
       name: 'rent-tenant',
       component:()=>import('../AutoYa/pages/rent-tenant.vue')
+    },
+    {
+      path: '/',
+      redirect: 'home'
     }
   ]
 })
