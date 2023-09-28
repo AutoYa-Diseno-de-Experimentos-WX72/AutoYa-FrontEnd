@@ -3,6 +3,7 @@ import Inicio from "@/AutoYa/pages/inicio-arrenda.vue"
 import NotificacionesPropie from "@/AutoYa/pages/notificaciones-propie.vue";
 import CarRegistrationOwner from "@/AutoYa/pages/car-registration-owner.vue";
 import RentTenant from "@/AutoYa/pages/rent-tenant.vue";
+import Login from "@/AutoYa/pages/login.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +31,13 @@ const router = createRouter({
       path: "/rent-tenant",
       name: "rent-tenant",
       component: RentTenant,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
     }
+    
   ]
 })
 export default router

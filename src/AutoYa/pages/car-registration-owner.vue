@@ -44,11 +44,14 @@ export default {
           </router-link>
           <router-link to="/home">
             <!-- Agrega la imagen a la derecha -->
-            <img
+            <router-link to="/login">
+              <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
                 alt="Usuario"
                 style="height: 30px; margin-left: 20px; cursor: pointer;"
-            />
+              />
+            </router-link>
+
           </router-link>
         </div>
       </template>
