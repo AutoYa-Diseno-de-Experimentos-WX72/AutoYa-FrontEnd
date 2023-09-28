@@ -42,7 +42,7 @@ export default {
               {{ item.label }}
             </pv-button>
           </router-link>
-          <router-link to="/home">
+          <router-link to="/profile-owner">
             <!-- Agrega la imagen a la derecha -->
             <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
