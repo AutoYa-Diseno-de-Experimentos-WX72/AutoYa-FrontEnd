@@ -66,6 +66,7 @@ export default{
 }
 .p-button-text{
   border-radius: 20px;
+  font-family: "Montserrat Thin";
 }
 .profile-button {
   padding: 10px 11px;
