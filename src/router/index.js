@@ -3,6 +3,9 @@ import Inicio from "@/AutoYa/pages/inicio-arrenda.vue"
 import NotificacionesPropie from "@/AutoYa/pages/notificaciones-propie.vue";
 import CarRegistrationOwner from "@/AutoYa/pages/car-registration-owner.vue";
 import RentTenant from "@/AutoYa/pages/rent-tenant.vue";
+import ProfileOwner from "@/AutoYa/pages/profile-owner.vue";
+import ProfileTenant from "@/AutoYa/pages/profile-tenant.vue";
+import RequestsTenant from "@/AutoYa/pages/requests-tenant.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +33,21 @@ const router = createRouter({
       path: "/rent-tenant",
       name: "rent-tenant",
       component: RentTenant,
+    },
+    {
+      path: '/profile-owner',
+      name: '/profile-owner',
+      component: ProfileOwner,
+    },
+    {
+      path: '/profile-tenant',
+      name: '/profile-tenant',
+      component: ProfileTenant,
+    },
+    {
+      path: '/requests-tenant',
+      name: '/requests-tenant',
+      component: RequestsTenant,
     }
   ]
 })
