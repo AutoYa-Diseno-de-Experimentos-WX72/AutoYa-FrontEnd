@@ -60,7 +60,7 @@ export default {
       items: [
         { label: "Inicio", to: "/home" },
         { label: "Registro", to: "/car-registration-owner" },
-        { label: "Notificaciones", to: "/about" },
+        { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-tenant" },
       ],
     };
@@ -75,7 +75,7 @@ export default {
   background-color: white;
   padding: 1px 30px 30px 30px;
   margin-top: 20px;
-  font-family: 'Poppins', sans-serif;;
+  font-family: 'Poppins', sans-serif;
 }
 .notification{
   margin: 0;

@@ -39,6 +39,7 @@
     </pv-toolbar>
   </header>
   <div>
+
     <div class="body-container">
       <img src="../../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
 
@@ -118,7 +119,7 @@ export default{
 
   }
   .orange-text {
-    color: #FF7A00;;
+    color: #FF7A00;
     font-size: 50px;
     font-weight: bold;
     margin: 0;
@@ -143,24 +144,21 @@ export default{
     margin-top: 40px;
   }
   input {
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    padding-right: 40px;
   }
   .share-button {
     background-color: #FF7A00;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 50px 10px 50px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
     font-size: 18px;
     white-space: nowrap;
-    padding-right: 50px;
-    padding-left: 50px;
   }
 
   .notifications-section {
