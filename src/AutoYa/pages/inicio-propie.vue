@@ -1,8 +1,46 @@
 <template>
+  <pv-toast />
+  <header>
+    <pv-toolbar class="custom-bg custom-toolbar">
+      <template #start>
+        <img
+            src="https://i.postimg.cc/vmZh3LGv/logotransparent-26-06.png"
+            alt="Logo"
+            style="height: 40px; margin-right: 20px;"
+        />
+      </template>
+      <template #end>
+        <div class="flex-column">
+          <router-link
+              v-for="item in items"
+              :to="item.to"
+              custom
+              v-slot="{ navigate, href }"
+              :key="item.label"
+          >
+            <pv-button
+                class="custom-button"
+                :href="href"
+                @click="navigate"
+            >
+              {{ item.label }}
+            </pv-button>
+          </router-link>
+          <router-link to="/home">
+            <!-- Agrega la imagen a la derecha -->
+            <img
+                src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
+                alt="Usuario"
+                style="height: 30px; margin-left: 20px; cursor: pointer;"
+            />
+          </router-link>
+        </div>
+      </template>
+    </pv-toolbar>
+  </header>
   <div>
-
     <div class="body-container">
-      <img src="../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
+      <img src="../../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
 
       <div class="floating-card">
         <h1 class="orange-text">Convierte tu auto</h1>
@@ -34,6 +72,17 @@
 <script>
 export default{
   name: "InicioPropie",
+  data() {
+    return {
+      drawer: false,
+      items: [
+        { label: "Inicio", to: "/home" },
+        { label: "Registro", to: "/car-registration-owner" },
+        { label: "Notificaciones", to: "/notifications" },
+        { label: "Alquiler", to: "/rent-tenant" },
+      ],
+    };
+  },
 };
 </script>
 
@@ -69,11 +118,11 @@ export default{
 
   }
   .orange-text {
-    color: orange;
+    color: #FF7A00;;
     font-size: 50px;
     font-weight: bold;
     margin: 0;
-    font-family: "Montserrat Thin";
+    font-family: 'Poppins', sans-serif;
     white-space: nowrap;
   }
   .black-text {
@@ -81,7 +130,7 @@ export default{
     font-size: 50px;
     font-weight: bold;
     margin: 0;
-    font-family: "Montserrat Thin";
+    font-family: 'Poppins', sans-serif;
     white-space: nowrap;
   }
   .input-button-container {
@@ -101,7 +150,7 @@ export default{
     padding-right: 40px;
   }
   .share-button {
-    background-color: orange;
+    background-color: #FF7A00;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -120,7 +169,7 @@ export default{
     background-color: white;
     padding: 1px 60px 60px 60px;
     margin-top: 20px;
-    font-family: "Montserrat Thin";
+    font-family: 'Poppins', sans-serif;
 
   }
   .notification{
@@ -150,7 +199,7 @@ export default{
     margin: 0;
   }
   .view-notification {
-    background-color: orange;
+    background-color: #FF7A00;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;

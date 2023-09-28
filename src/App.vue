@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <ToolbarPropie :items="items" :current-path="$route.path"/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ToolbarPropie from "@/propie/toolbar-propie.vue";
 export default {
   name:"App",
   components: {
-    ToolbarPropie,
   },
   data() {
     return {
