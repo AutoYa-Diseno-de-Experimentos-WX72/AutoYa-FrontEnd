@@ -26,7 +26,7 @@
               {{ item.label }}
             </pv-button>
           </router-link>
-          <router-link to="/home">
+          <router-link to="/profile-owner">
             <!-- Agrega la imagen a la derecha -->
             <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
@@ -77,10 +77,10 @@ export default{
     return {
       drawer: false,
       items: [
-        { label: "Inicio", to: "/home" },
+        { label: "Inicio", to: "/home-owner" },
         { label: "Registro", to: "/car-registration-owner" },
         { label: "Notificaciones", to: "/notifications" },
-        { label: "Alquiler", to: "/rent-tenant" },
+        { label: "Alquiler", to: "/rent-owner" },
       ],
     };
   },
