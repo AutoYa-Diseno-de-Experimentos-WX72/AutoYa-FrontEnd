@@ -1,32 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Inicio from "@/arrenda/inicio-arrenda.vue";
+import NotificacionesPropie from "@/propie/notificaciones-propie.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/home',
-      name: 'home',
-      component: HomeView,
-    },
-    {
       path: '/',
-      redirect: 'home'
+      redirect: 'inicio'
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
+      path: '/inicio',
+      name: 'inicio',
+      component: Inicio,
     },
     {
-      path: '/car-registration-owner',
-      name: 'car-registration-owner',
-      component:()=>import('../AutoYa/pages/car-registration-owner.vue')
+      path: "/notificaciones",
+      name: "Notificaciones",
+      component: NotificacionesPropie,
     },
-    {
-      path: '/rent-tenant',
-      name: 'rent-tenant',
-      component:()=>import('../AutoYa/pages/rent-tenant.vue')
-    }
   ]
 })
 export default router
