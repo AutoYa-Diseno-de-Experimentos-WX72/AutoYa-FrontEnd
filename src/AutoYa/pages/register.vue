@@ -12,6 +12,11 @@ const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
 
+const nombres = ref('');
+const apellidos = ref('');
+const fechaNacimiento = ref('');
+const telefono = ref('');
+const correo = ref('');
 </script>
 
 <template>
@@ -26,33 +31,30 @@ const logoUrl = computed(() => {
                     </div>
 
                     <div>
-                        <label for="email1" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo</label>
-                        <pv-input-text id="email1" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                        <label for="nombres" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Nombres</label>
+                        <pv-input-text id="nombres" type="text" placeholder="Ingrese sus nombres" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="nombres" />
+
+                        <label for="apellidos" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Apellidos</label>
+                        <pv-input-text id="apellidos" type="text" placeholder="Ingrese sus apellidos" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
+
+                       
+                        <label for="correo" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo electrónico</label>
+                        <pv-input-text id="correo" type="text" placeholder="Ex. mail@abc.com" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="correo" />
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Contraseña</label>
                         <input class="p-inputtext p-component p-password-input w-full" data-pc-name="inputtext" data-pc-section="input" type="password" aria-controls="pv_id_9_panel" aria-expanded="false" aria-haspopup="true" placeholder="Password" style="padding: 1rem;">
-                
+                        
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
                                 <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
                             </div>
-                            <router-link to="/register" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">¿No estás registrado? Crea una cuenta</router-link>
                         </div>
-                        <router-link to="/home">
-                             <pv-button label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
+                     
+                        <router-link to="/login">
+                            <pv-button label="Registrarse" class="w-full p-3 text-xl"></pv-button>
                         </router-link>
 
-                        <div class="TipoLoginUsuario">
-    <router-link to="/login">
-        <pv-button label="Ingresar como Arrendatario"></pv-button>
-    </router-link>
-    <router-link to="/propietario">
-        <pv-button label="Ingresar como Propietario"></pv-button>
-    </router-link>
-</div>
-
-
-
+            
                     </div>
                 </div>
             </div>

@@ -38,7 +38,7 @@ const logoUrl = computed(() => {
                             </div>
                             <router-link to="/register" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">¿No estás registrado? Crea una cuenta</router-link>
                         </div>
-                        <router-link to="/home">
+                        <router-link to="/init-propie">
                              <pv-button label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
                         </router-link>
 
@@ -46,7 +46,7 @@ const logoUrl = computed(() => {
     <router-link to="/login">
         <pv-button label="Ingresar como Arrendatario"></pv-button>
     </router-link>
-    <router-link to="/propietario">
+    <router-link to="/login-propietario">
         <pv-button label="Ingresar como Propietario"></pv-button>
     </router-link>
 </div>

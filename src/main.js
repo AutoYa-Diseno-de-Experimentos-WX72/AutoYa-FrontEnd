@@ -23,6 +23,11 @@ import Toast from "primevue/toast";
 import Dropdown from "primevue/dropdown";
 import Tag from "primevue/tag";
 import Card from "primevue/card";
+import Password from 'primevue/password';
+
+
+
+
 createApp(App)
     .use(router)
     .use(PrimeVue, { ripple: true })
@@ -31,6 +36,7 @@ createApp(App)
     .component("pv-column", Column)
     .component('pv-toolbar', Toolbar)
     .component('pv-input-text', InputText)
+    .component('pv-password', Password)
     .component('pv-textarea', Textarea)
     .component('pv-button', Button)
     .component('pv-row', Row)
