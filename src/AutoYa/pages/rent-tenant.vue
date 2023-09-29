@@ -10,8 +10,8 @@ export default {
       drawer: false,
       items: [
         { label: "Inicio", to: "/home" },
-        { label: "Buscar Autos", to: "/about" },
-        { label: "Mantenimiento", to: "/about" },
+        { label: "Buscar Autos", to: "/car-search-tenant" },
+        { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
         { label: "Solicitudes", to: "/requests-tenant" },
       ],

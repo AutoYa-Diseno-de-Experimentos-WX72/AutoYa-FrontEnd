@@ -38,90 +38,66 @@
       </template>
     </pv-toolbar>
   </header>
-  <div>
 
-    <div class="body-container">
-      <img src="../../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
+  <div class="vertical-container">
+    <div class="floating-card">
+      <h1 class="orange-text">Alquila autos</h1>
 
-      <div class="floating-card">
-        <h1 class="orange-text">Alquila autos</h1>
-        <h1 class="black-text">cercanos fácilmente</h1>
+      <div class="input-button-container">
+        <div class="input-group">
+          <p class="black-text-body">Ubicacion</p>
+          <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
+        </div>
 
-        <div class="input-button-container">
-          <div class="input-container">
-            <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-            <button class="search-button">Buscar un auto</button>
-          </div>
+        <div class="input-group">
+          <p class="black-text-body">Precio</p>
+          <input type="text" id="precio" placeholder="S/800 x mes">
+        </div>
+
+        <div class="input-group">
+          <p class="black-text-body">Tiempo de alquiler</p>
+          <input type="text" id="tiempo" placeholder="1 mes">
+        </div>
+
+        <div class="input-group">
+          <p class="black-text-body">Marca</p>
+          <input type="text" id="marca" placeholder="TOYOTA">
+        </div>
+
+        <div class="input-group">
+          <p class="black-text-body">Modelo</p>
+          <input type="text" id="modelo" placeholder="PRIUS">
+        </div>
+
+        <div class="input-group">
+          <p class="black-text-body">Clase</p>
+          <input type="text" id="clase" placeholder="ECON'OMICA">
+        </div>
+
+        <div class="input-group">
+          <p class="black-text-body">Transmision</p>
+          <input type="text" id="transmision" placeholder="AUTOMATICA">
+        </div>
+      </div>
+      <div class="input-container">
+        <button class="search-button" @click="buscarAuto">Buscar</button>
+
+      </div>
+
+    </div>
+    <div class="floating-card2">
+      <div class="card-content">
+        <img src="https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_1280.jpg" alt="Imagen del vehículo" class="vehicle-image">
+        <div class="button-container">
+          <button class="Contract-button">Ver Contrato de Alquiler</button>
+
+          <!-- Botón para ver disponibilidad -->
+          <button class="available-button">Disponibles</button>
         </div>
       </div>
     </div>
-    <div class="centered-text">
-      <p class="black-text-body">El auto perfecto para ti está más cerca que nunca</p>
-      <p class="orange-text-body">Marcas de autos disponibles</p>
-    </div>
-    <div class="card-carousel-container">
-      <div class="card-carousel">
-        <div class="carousel-arrow left-arrow" @click="rotateCarousel(-2)">
-          <i class="pi pi-chevron-left"></i>
-        </div>
-        <div class="carousel-cards">
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/hyundai.jpg" alt="Hyundai">
-              <p class="card-title">Hyundai</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/nissan.jpg" alt="Nissan">
-              <p class="card-title">Nissan</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/toyota.jpg" alt="Toyota">
-              <p class="card-title">Toyota</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-
-        </div>
-        <div class="carousel-arrow right-arrow" @click="rotateCarousel(2)">
-          <i class="pi pi-chevron-right"></i>
-        </div>
-      </div>
-    </div>
-    <RouterView />
   </div>
+
 </template>
 
 <script>
@@ -318,5 +294,7 @@ input {
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
 }
+
+
 
 </style>
