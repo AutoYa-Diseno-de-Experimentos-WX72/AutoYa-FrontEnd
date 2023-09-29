@@ -45,7 +45,6 @@ const router = createRouter({
       name: "rent-owner",
       component: RentOwner,
     },
-  
     {
       path: "/login",
       name: "login",
