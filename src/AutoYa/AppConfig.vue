@@ -94,31 +94,9 @@ const applyScale = () => {
             <InputSwitch v-model="layoutConfig.ripple.value"></InputSwitch>
         </template>
 
-        <h5>Bootstrap</h5>
-        <div class="grid">
-            <div class="col-3">
-                <button class="p-link w-2rem h-2rem" @click="onChangeTheme('bootstrap4-light-blue', 'light')">
-                    <img src="/layout/images/themes/bootstrap4-light-blue.svg" class="w-2rem h-2rem" alt="Bootstrap Light Blue" />
-                </button>
-            </div>
-            <div class="col-3">
-                <button class="p-link w-2rem h-2rem" @click="onChangeTheme('bootstrap4-light-purple', 'light')">
-                    <img src="/layout/images/themes/bootstrap4-light-purple.svg" class="w-2rem h-2rem" alt="Bootstrap Light Purple" />
-                </button>
-            </div>
-            <div class="col-3">
-                <button class="p-link w-2rem h-2rem" @click="onChangeTheme('bootstrap4-dark-blue', 'dark')">
-                    <img src="/layout/images/themes/bootstrap4-dark-blue.svg" class="w-2rem h-2rem" alt="Bootstrap Dark Blue" />
-                </button>
-            </div>
-            <div class="col-3">
-                <button class="p-link w-2rem h-2rem" @click="onChangeTheme('bootstrap4-dark-purple', 'dark')">
-                    <img src="/layout/images/themes/bootstrap4-dark-purple.svg" class="w-2rem h-2rem" alt="Bootstrap Dark Purple" />
-                </button>
-            </div>
-        </div>
 
-        <h5>Material Design</h5>
+
+<!--        <h5>Material Design</h5>
         <div class="grid">
             <div class="col-3">
                 <button class="p-link w-2rem h-2rem" @click="onChangeTheme('md-light-indigo', 'light')">
@@ -140,9 +118,9 @@ const applyScale = () => {
                     <img src="/layout/images/themes/md-dark-deeppurple.svg" class="w-2rem h-2rem" alt="Material Dark DeepPurple" />
                 </button>
             </div>
-        </div>
+        </div>-->
 
-        <h5>Material Design Compact</h5>
+<!--        <h5>Material Design Compact</h5>
         <div class="grid">
             <div class="col-3">
                 <button class="p-link w-2rem h-2rem" @click="onChangeTheme('mdc-light-indigo', 'light')">
@@ -290,7 +268,7 @@ const applyScale = () => {
                     <img src="/layout/images/themes/arya-purple.png" class="w-2rem h-2rem" alt="Arya Purple" />
                 </button>
             </div>
-        </div>
+        </div>-->
     </Sidebar>
 </template>
 
