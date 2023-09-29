@@ -11,7 +11,7 @@ export default {
         { label: "Inicio", to: "/init-propie" },
         { label: "Registro", to: "/car-registration-owner" },
         { label: "Notificaciones", to: "/notifications" },
-        { label: "Alquiler", to: "/rent-tenant" },
+        { label: "Alquiler", to: "/rent-owner" },
       ],
     };
   },

@@ -59,57 +59,110 @@ export default {
     </pv-toolbar>
   </header>
 
-  <div class="container">
-    <div class="half-width-card">
+  <div class="p-grid">
+    <div class="p-col-12 p-md-6">
       <Card>
-        <template #title>
-        </template>
+        <template #title></template>
         <template #content>
-          <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">REGISTRO DE VEHÍCULO</h1>
-          <div class="input-grid">
-            <div class="input-column">
-              <p style="font-family: 'Poppins',sans-serif"><strong>Marca</strong></p>
-              <pv-input placeholder="Marca" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Velocidad Max</strong></p>
-              <pv-input placeholder="Velocidad Max" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Largo/Ancho/Alto</strong></p>
-              <pv-input placeholder="Largo/Ancho/Alto" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Clase</strong></p>
-              <pv-input placeholder="Clase" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Tiempo de Alquiler</strong></p>
-              <pv-input placeholder="Tiempo de Alquiler" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Lugar de recojo del vehículo</strong></p>
-              <pv-input placeholder="Lugar de recojo del vehículo" style="font-family: 'Poppins',sans-serif"></pv-input>
+          <div style="display: grid; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr;">
+            <div style="grid-row: 1; grid-column: 1; text-align: left;">
+              <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">ALQUILER</h1>
             </div>
-            <div class="input-column">
-              <p style="font-family: 'Poppins',sans-serif"><strong>Modelo</strong></p>
-              <pv-input placeholder="Modelo" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Consumo</strong></p>
-              <pv-input placeholder="Consumo" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Peso</strong></p>
-              <pv-input placeholder="Peso" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Transmisión</strong></p>
-              <pv-input placeholder="Transmisión" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Costo de alquielr al mes</strong></p>
-              <pv-input placeholder="Costo de alquiler al mes" style="font-family: 'Poppins',sans-serif"></pv-input>
+            <div style="grid-row: 1; grid-column: 2; text-align: right;">
+              <p style="font-family: 'Poppins',sans-serif">Agiliza tus pagos afiliando tu cuenta de banco con MODO</p>
             </div>
-          </div>
-          <div class="input-column">
-            <Button label="REGISTRAR" class="custom-button2" @click="">REGISTRAR</Button>
+            <div style="grid-row: 2; grid-column: 1; text-align: left;">
+              <p style="font-family: 'Poppins',sans-serif">Ver autos compartidos</p>
+            </div>
+            <div style="grid-row: 2; grid-column: 2; text-align: right;">
+              <button class="custom-button3">Afiliar cuenta de banco</button>
+            </div>
           </div>
         </template>
       </Card>
     </div>
-    <div class="half-width-card">
+    <div class="p-col-12 p-md-6">
       <Card>
         <template #title></template>
         <template #content>
-          <div class="button-container">
-            <Button label="SUBIR FOTOS" class="custom-button2">SUBIR FOTOS</button>
-            <div class="button-space"></div>
-            <router-link to="/rent-contract-owner">
-              <Button label="CREAR CONTRATO DE ALQUILER" class="custom-button3">CREAR CONTRATO DE ALQUILER</Button>
-            </router-link>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Estado: Pendiente</h1>
+                  <button class="custom-button3">Eliminar publicación</button>
+                </template>
+              </Card>
+            </div>
           </div>
         </template>
       </Card>
