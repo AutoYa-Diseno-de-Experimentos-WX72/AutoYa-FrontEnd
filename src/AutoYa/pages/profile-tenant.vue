@@ -16,7 +16,7 @@ export default {
         { label: "Buscar Autos", to: "/car-registration-owner" },
         { label: "Mantenimiento", to: "/about" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: 'Solicitudes', to: '/home'},
+        { label: 'Solicitudes', to: '/requests-tenant'},
       ],
     };
   },
