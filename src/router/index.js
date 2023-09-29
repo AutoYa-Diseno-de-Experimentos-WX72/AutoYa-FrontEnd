@@ -12,6 +12,8 @@ import ProfileTenant from "@/AutoYa/pages/profile-tenant.vue";
 import ProfileOwner from "@/AutoYa/pages/profile-owner.vue";
 import RentOwner from "@/AutoYa/pages/rent-owner.vue";
 import RentContractOwner from "@/AutoYa/pages/rent-contract-owner.vue";
+import CarSearchTenant from "@/AutoYa/pages/car-search-tenant.vue";
+import ManteinanceTenant from "@/AutoYa/pages/manteinance-tenant.vue";
 
 
 const router = createRouter({
@@ -85,6 +87,16 @@ const router = createRouter({
       path: "/profile-owner",
       name: "profile-owner",
       component: ProfileOwner,
+    },
+    {
+      path: "/car-search-tenant",
+      name: "car-search-tenant",
+      component: CarSearchTenant,
+    },
+    {
+      path: "/manteinance-tenant",
+      name: "manteinance-tenant",
+      component: ManteinanceTenant,
     }
   ]
 })

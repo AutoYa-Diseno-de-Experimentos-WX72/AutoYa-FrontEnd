@@ -38,95 +38,59 @@
       </template>
     </pv-toolbar>
   </header>
-  <div>
 
-    <div class="body-container">
-      <img src="../../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
-
-      <div class="floating-card">
-        <h1 class="orange-text">Alquila autos</h1>
-        <h1 class="black-text">cercanos fácilmente</h1>
-
-        <div class="input-button-container">
-          <div class="input-container">
-            <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-            <button class="search-button">Buscar un auto</button>
-          </div>
-        </div>
-      </div>
+  <div class="container">
+    <div class="half-width-card">
+      <Card>
+        <template #title>
+        </template>
+        <template #content>
+          <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">MANTENIMIENTO</h1>
+          <p style="font-family: 'Poppins',sans-serif">Cree una solicitud para su arrendador en minutos con información detallada sobre el problema y fotografías relevantes. Además, puede comunicarse con el arrendador cuando le sea necesario.</p>
+          <p style="font-family: 'Poppins',sans-serif; color:#FF7A00">Vea la respuesta del propietario en su correo electrónico.</p>
+        </template>
+      </Card>
     </div>
-    <div class="centered-text">
-      <p class="black-text-body">El auto perfecto para ti está más cerca que nunca</p>
-      <p class="orange-text-body">Marcas de autos disponibles</p>
-    </div>
-    <div class="card-carousel-container">
-      <div class="card-carousel">
-        <div class="carousel-arrow left-arrow" @click="rotateCarousel(-2)">
-          <i class="pi pi-chevron-left"></i>
-        </div>
-        <div class="carousel-cards">
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/hyundai.jpg" alt="Hyundai">
-              <p class="card-title">Hyundai</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/nissan.jpg" alt="Nissan">
-              <p class="card-title">Nissan</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/toyota.jpg" alt="Toyota">
-              <p class="card-title">Toyota</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
+    <div class="half-width-card">
+      <Card>
+        <template #title></template>
+        <template #content>
+          <p style="font-family: 'Poppins',sans-serif">Seleccionar nombre del propietario del auto alquilado</p>
+          <Dropdown :options="userOptions" v-model="selectedUser" placeholder="Selecciona un usuario" />
+          <Button class="custom-button3">Buscar</Button>
+          <Card>
+            <template #title></template>
+            <template #content>
+              <p style="font-family: 'Poppins',sans-serif">Tipo de problema</p>
+              <InputText v-model="value1" placeholder="Tipo de problema" style="font-family: 'Poppins',sans-serif"/>
+              <p style="font-family: 'Poppins',sans-serif">Titulo</p>
+              <InputText v-model="value1" placeholder="Titulo" style="font-family: 'Poppins',sans-serif"/>
+              <p style="font-family: 'Poppins',sans-serif">Descripcion</p>
+              <InputText v-model="value1" placeholder="Descripcion" style="font-family: 'Poppins',sans-serif"/>
 
-        </div>
-        <div class="carousel-arrow right-arrow" @click="rotateCarousel(2)">
-          <i class="pi pi-chevron-right"></i>
-        </div>
-      </div>
+              <div class="button-container">
+                <Button class="custom-button3">Agregar Fotos</Button>
+                <Button class="custom-button3">Enviar</Button>
+              </div>
+            </template>
+          </Card>
+        </template>
+      </Card>
     </div>
-    <RouterView />
   </div>
+
 </template>
 
 <script>
+import Card from "primevue/card";
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
 export default{
-  name: "InicioArrenda",
+  components: {
+    Card,
+    Dropdown,
+    InputText,
+  },
   data() {
     return {
       drawer: false,
@@ -137,7 +101,12 @@ export default{
         { label: "Alquiler", to: "/rent-tenant" },
         { label: "Solicitudes", to: "/requests-tenant" },
       ],
-      cardCount: 4,
+      userOptions: [
+        'Alonso Robles',
+        'Luis Isla',
+        'Erick Urbi',
+      ],
+      selectedUser: null,
     };
   },
   methods: {
@@ -317,6 +286,21 @@ input {
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
+}
+
+.button-container {
+  display: block;
+  margin-top: 10px; /* Espacio entre el párrafo y los botones, ajusta según sea necesario */
+}
+
+.custom-button3 {
+  height: 30px;
+  margin: 20px;
+  background-color: black;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  min-width: auto;
 }
 
 </style>

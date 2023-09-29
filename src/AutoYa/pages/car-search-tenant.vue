@@ -38,95 +38,56 @@
       </template>
     </pv-toolbar>
   </header>
-  <div>
 
-    <div class="body-container">
-      <img src="../../../public/cuerpo.jpg" alt="Imagen de fondo" class="background-image">
-
-      <div class="floating-card">
-        <h1 class="orange-text">Alquila autos</h1>
-        <h1 class="black-text">cercanos fácilmente</h1>
-
-        <div class="input-button-container">
-          <div class="input-container">
-            <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-            <button class="search-button">Buscar un auto</button>
+  <div class="container">
+    <div class="half-width-card">
+      <Card>
+        <template #title>
+        </template>
+        <template #content>
+          <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Busca un auto</h1>
+          <p style="font-family: 'Poppins',sans-serif">Ubicación</p>
+          <InputText v-model="value1" placeholder="Ubicación" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Precio</p>
+          <InputText v-model="value1" placeholder="Precio" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Tiempo de alquiler</p>
+          <InputText v-model="value1" placeholder="Tiempo de alquiler" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Marca</p>
+          <InputText v-model="value1" placeholder="Marca" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Modelo</p>
+          <InputText v-model="value1" placeholder="Modelo" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Clase</p>
+          <InputText v-model="value1" placeholder="Clase" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Transmisión</p>
+          <InputText v-model="value1" placeholder="Transmisión" style="font-family: 'Poppins',sans-serif"/>
+        </template>
+      </Card>
+    </div>
+    <div class="half-width-card">
+      <Card>
+        <template #title></template>
+        <template #content>
+          <div style="text-align: center;">
+            <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto; max-height: 200px;" />
           </div>
-        </div>
-      </div>
+          <div style="text-align: center; margin-top: 10px;">
+            <button class="custom-button3">Ver contrato de alquiler</button>
+          </div>
+        </template>
+      </Card>
     </div>
-    <div class="centered-text">
-      <p class="black-text-body">El auto perfecto para ti está más cerca que nunca</p>
-      <p class="orange-text-body">Marcas de autos disponibles</p>
-    </div>
-    <div class="card-carousel-container">
-      <div class="card-carousel">
-        <div class="carousel-arrow left-arrow" @click="rotateCarousel(-2)">
-          <i class="pi pi-chevron-left"></i>
-        </div>
-        <div class="carousel-cards">
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/hyundai.jpg" alt="Hyundai">
-              <p class="card-title">Hyundai</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/nissan.jpg" alt="Nissan">
-              <p class="card-title">Nissan</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/toyota.jpg" alt="Toyota">
-              <p class="card-title">Toyota</p>
-            </div>
-          </a>
-          <a href="#" class="card-link">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-          <a href="#" class="card-link hidden-card">
-            <div class="card">
-              <img src="../../../public/kia.jpg" alt="KIA">
-              <p class="card-title">KIA</p>
-            </div>
-          </a>
-
-        </div>
-        <div class="carousel-arrow right-arrow" @click="rotateCarousel(2)">
-          <i class="pi pi-chevron-right"></i>
-        </div>
-      </div>
-    </div>
-    <RouterView />
   </div>
+
 </template>
 
 <script>
+import Card from "primevue/card"
+import InputText from "primevue/inputtext";
 export default{
-  name: "InicioArrenda",
+  components: {
+    Card,
+    InputText,
+  },
   data() {
     return {
       drawer: false,
@@ -317,6 +278,20 @@ input {
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.half-width-card {
+  flex: 1;
+  width: calc(50% - 1rem);
+  margin: 0.5rem;
+  box-sizing: border-box;
+  max-width: 50%;
 }
 
 </style>
