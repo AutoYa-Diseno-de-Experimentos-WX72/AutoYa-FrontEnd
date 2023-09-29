@@ -7,6 +7,10 @@ import RentTenant from "@/AutoYa/pages/rent-tenant.vue";
 import Login from "@/AutoYa/pages/login.vue";
 import Register from "@/AutoYa/pages/register.vue";
 import Propietario from "@/AutoYa/pages/propietario.vue";
+import RequestsTenant from "@/AutoYa/pages/requests-tenant.vue";
+import ProfileTenant from "@/AutoYa/pages/profile-tenant.vue";
+import ProfileOwner from "@/AutoYa/pages/profile-owner.vue";
+import RentOwner from "@/AutoYa/pages/rent-owner.vue";
 
 
 const router = createRouter({
@@ -36,6 +40,11 @@ const router = createRouter({
       name: "rent-tenant",
       component: RentTenant,
     },
+    {
+      path: "/rent-owner",
+      name: "rent-owner",
+      component: RentOwner,
+    },
   
     {
       path: "/login",
@@ -56,6 +65,21 @@ const router = createRouter({
       path: "/init-propie",
       name: "init-propie",
       component: InitPropietario,
+    },
+    {
+      path: "/requests-tenant",
+      name: "requests-tenant",
+      component: RequestsTenant,
+    },
+    {
+      path: "/profile-tenant",
+      name: "profile-tenant",
+      component: ProfileTenant,
+    },
+    {
+      path: "/profile-owner",
+      name: "profile-owner",
+      component: ProfileOwner,
     }
   ]
 })
