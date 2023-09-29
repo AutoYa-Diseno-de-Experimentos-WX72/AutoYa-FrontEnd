@@ -135,7 +135,7 @@ export default{
         { label: "Buscar Autos", to: "/about" },
         { label: "Mantenimiento", to: "/about" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: "Solicitudes", to: "/about" },
+        { label: "Solicitudes", to: "/requests-tenant" },
       ],
       cardCount: 4,
     };
