@@ -11,6 +11,7 @@ import RequestsTenant from "@/AutoYa/pages/requests-tenant.vue";
 import ProfileTenant from "@/AutoYa/pages/profile-tenant.vue";
 import ProfileOwner from "@/AutoYa/pages/profile-owner.vue";
 import RentOwner from "@/AutoYa/pages/rent-owner.vue";
+import RentContractOwner from "@/AutoYa/pages/rent-contract-owner.vue";
 
 
 const router = createRouter({
@@ -34,6 +35,11 @@ const router = createRouter({
       path: "/car-registration-owner",
       name: "car-registration-owner",
       component: CarRegistrationOwner,
+    },
+    {
+      path: "/rent-contract-owner",
+      name: "rent-contract-owner",
+      component: RentContractOwner,
     },
     {
       path: "/rent-tenant",
