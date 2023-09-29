@@ -77,7 +77,7 @@ export default{
     return {
       drawer: false,
       items: [
-        { label: "Inicio", to: "/home-owner" },
+        { label: "Inicio", to: "/init-propie-owner" },
         { label: "Registro", to: "/car-registration-owner" },
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
