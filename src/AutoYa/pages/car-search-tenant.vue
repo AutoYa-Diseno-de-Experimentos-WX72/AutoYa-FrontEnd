@@ -39,70 +39,55 @@
     </pv-toolbar>
   </header>
 
-  <div class="vertical-container">
-    <div class="floating-card">
-      <h1 class="orange-text">Alquila autos</h1>
-
-      <div class="input-button-container">
-        <div class="input-group">
-          <p class="black-text-body">Ubicacion</p>
-          <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Precio</p>
-          <input type="text" id="precio" placeholder="S/800 x mes">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Tiempo de alquiler</p>
-          <input type="text" id="tiempo" placeholder="1 mes">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Marca</p>
-          <input type="text" id="marca" placeholder="TOYOTA">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Modelo</p>
-          <input type="text" id="modelo" placeholder="PRIUS">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Clase</p>
-          <input type="text" id="clase" placeholder="ECON'OMICA">
-        </div>
-
-        <div class="input-group">
-          <p class="black-text-body">Transmision</p>
-          <input type="text" id="transmision" placeholder="AUTOMATICA">
-        </div>
-      </div>
-      <div class="input-container">
-        <button class="search-button" @click="buscarAuto">Buscar</button>
-
-      </div>
-
+  <div class="container">
+    <div class="half-width-card">
+      <Card>
+        <template #title>
+        </template>
+        <template #content>
+          <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Busca un auto</h1>
+          <p style="font-family: 'Poppins',sans-serif">Ubicación</p>
+          <InputText v-model="value1" placeholder="Ubicación" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Precio</p>
+          <InputText v-model="value1" placeholder="Precio" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Tiempo de alquiler</p>
+          <InputText v-model="value1" placeholder="Tiempo de alquiler" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Marca</p>
+          <InputText v-model="value1" placeholder="Marca" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Modelo</p>
+          <InputText v-model="value1" placeholder="Modelo" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Clase</p>
+          <InputText v-model="value1" placeholder="Clase" style="font-family: 'Poppins',sans-serif"/>
+          <p style="font-family: 'Poppins',sans-serif">Transmisión</p>
+          <InputText v-model="value1" placeholder="Transmisión" style="font-family: 'Poppins',sans-serif"/>
+        </template>
+      </Card>
     </div>
-    <div class="floating-card2">
-      <div class="card-content">
-        <img src="https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_1280.jpg" alt="Imagen del vehículo" class="vehicle-image">
-        <div class="button-container">
-          <button class="Contract-button">Ver Contrato de Alquiler</button>
-
-          <!-- Botón para ver disponibilidad -->
-          <button class="available-button">Disponibles</button>
-        </div>
-      </div>
+    <div class="half-width-card">
+      <Card>
+        <template #title></template>
+        <template #content>
+          <div style="text-align: center;">
+            <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto; max-height: 200px;" />
+          </div>
+          <div style="text-align: center; margin-top: 10px;">
+            <button class="custom-button3">Ver contrato de alquiler</button>
+          </div>
+        </template>
+      </Card>
     </div>
   </div>
 
 </template>
 
 <script>
+import Card from "primevue/card"
+import InputText from "primevue/inputtext";
 export default{
-  name: "InicioArrenda",
+  components: {
+    Card,
+    InputText,
+  },
   data() {
     return {
       drawer: false,
@@ -295,6 +280,18 @@ input {
   font-weight: bold;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
+.half-width-card {
+  flex: 1;
+  width: calc(50% - 1rem);
+  margin: 0.5rem;
+  box-sizing: border-box;
+  max-width: 50%;
+}
 
 </style>
