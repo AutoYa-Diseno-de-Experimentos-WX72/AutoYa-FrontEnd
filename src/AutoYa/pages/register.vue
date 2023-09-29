@@ -8,6 +8,8 @@ const email = ref('');
 const password = ref('');
 const checked = ref(false);
 
+
+
 const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
@@ -17,6 +19,8 @@ const apellidos = ref('');
 const fechaNacimiento = ref('');
 const telefono = ref('');
 const correo = ref('');
+
+
 </script>
 
 <template>
@@ -36,6 +40,12 @@ const correo = ref('');
 
                         <label for="apellidos" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Apellidos</label>
                         <pv-input-text id="apellidos" type="text" placeholder="Ingrese sus apellidos" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
+
+                        <label for="fechaNacimiento" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Fecha de nacimiento</label>
+                        <pv-input-text id="fechaNacimiento" type="text" placeholder="DD/MM/AAAA" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
+
+                        <label for="teléfono" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Teléfono</label>
+                        <pv-input-text id="teléfono" type="text" placeholder="+51 teléfono" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
 
                        
                         <label for="correo" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo electrónico</label>
