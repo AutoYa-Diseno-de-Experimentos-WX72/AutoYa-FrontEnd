@@ -1,5 +1,10 @@
 <script>
+import Card from "primevue/card";
+
 export default {
+  components: {
+    Card,
+  },
   data() {
     return {
       drawer: false,
@@ -55,6 +60,74 @@ export default {
       </template>
     </pv-toolbar>
   </header>
+
+  <div class="p-grid">
+    <div class="p-col-12 p-md-6">
+      <Card>
+        <template #title></template>
+        <template #content>
+          <div style="display: grid; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr;">
+            <div style="grid-row: 1; grid-column: 1; text-align: left;">
+              <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">ALQUILER</h1>
+            </div>
+            <div style="grid-row: 2; grid-column: 1; text-align: left;">
+              <p style="font-family: 'Poppins',sans-serif">Autos alquilados actualmente</p>
+            </div>
+          </div>
+        </template>
+      </Card>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <Card>
+        <template #title></template>
+        <template #content>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <p style="font-family: 'Poppins',sans-serif">Propietario: Alonso Robles</p>
+                  <p style="font-family: 'Poppins',sans-serif">Celular: +51 999 999 999</p>
+                  <p style="font-family: 'Poppins',sans-serif">Fecha de inicio de contrato: 28/09/2023</p>
+                  <p style="font-family: 'Poppins',sans-serif">Fecha de finalizacion de contrato: 28/10/2023</p>
+                  <h2 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Solicitud aceptada</h2>
+                  <button class="custom-button3">Pagar</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
+                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
+                  <p style="font-family: 'Poppins',sans-serif">Propietario: Alonso Robles</p>
+                  <p style="font-family: 'Poppins',sans-serif">Celular: +51 999 999 999</p>
+                  <p style="font-family: 'Poppins',sans-serif">Fecha de inicio de contrato: 28/09/2023</p>
+                  <p style="font-family: 'Poppins',sans-serif">Fecha de finalizacion de contrato: 28/10/2023</p>
+                  <h2 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Solicitud aceptada</h2>
+                  <button class="custom-button3">Pagar</button>
+                </template>
+              </Card>
+            </div>
+            <div style="flex: 20%; margin: 5px;">
+              <Card>
+                <template #title></template>
+                <template #content>
+                  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                    <button class="custom-button3">Alquilar un auto nuevo</button>
+                  </div>
+                </template>
+              </Card>
+            </div>
+          </div>
+        </template>
+      </Card>
+    </div>
+  </div>
+
 </template>
 
 <style>
@@ -71,6 +144,16 @@ export default {
 .custom-button:focus {
   background-color: #FF7A00 !important;
   color: white !important;
+}
+
+.custom-button3 {
+  height: 30px;
+  margin: 20px;
+  background-color: black;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  min-width: auto;
 }
 
 .custom-toolbar {
