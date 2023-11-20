@@ -2,13 +2,25 @@
 import { useLayout } from '@/AutoYa/composables/layout'
 import { ref, computed } from 'vue';
 import AppConfig from '@/AutoYa/AppConfig.vue';
+import AuthService from "@/AutoYa/services/auth.service";
+import ArrendatarioService from "@/AutoYa/services/arrendatario.service";
 
 const { layoutConfig } = useLayout();
 const email = ref('');
-const password = ref('');
+
 const checked = ref(false);
 
+const fechaNacimiento = ref({
+  day: '',
+  month: '',
+  year: '',
+});
 
+const customFormat = 'yyyy-MM-dd';
+
+const tipoUsuario = ref(''); // Agrega esta línea para la variable del tipo de usuario
+
+const tipoUsuarioOptions = ['Arrendatario', 'Propietario'];
 
 const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
@@ -16,10 +28,60 @@ const logoUrl = computed(() => {
 
 const nombres = ref('');
 const apellidos = ref('');
-const fechaNacimiento = ref('');
-const telefono = ref('');
+const telefono = ref(0);
 const correo = ref('');
+const password = ref('');
 
+const registerUser = async () => {
+  // Verifica que los campos requeridos estén llenos
+  if (!nombres.value || !apellidos.value || !correo.value || !password.value || !tipoUsuario.value) {
+    // Manejar el caso en el que los campos estén vacíos
+    console.error("Todos los campos son obligatorios.");
+    return;
+  }
+
+  // Construye un objeto de usuario con los datos ingresados por el usuario
+  const user = {
+    firstName: nombres.value,
+    lastName: apellidos.value,
+    email: correo.value,
+    password: password.value,
+  };
+
+  try {
+    // Intenta registrar al usuario utilizando el servicio AuthService
+    const response = await AuthService.register(user);
+
+    // Muestra un mensaje o realiza alguna acción adicional si es necesario
+    console.log("Usuario registrado correctamente", response);
+
+    // Si el tipo de usuario es "Arrendatario", crea un arrendatario
+    if (tipoUsuario.value === 'Arrendatario') {
+      const fechaNacimientoFormatted = `${fechaNacimiento.year}-${fechaNacimiento.month}-${fechaNacimiento.day}T00:00:00.000Z`;
+
+      const arrendatarioData = {
+        nombres: nombres.value,
+        apellidos: apellidos.value,
+        fechaNacimiento: fechaNacimientoFormatted,
+        telefono: telefono.value,
+        correo: correo.value,
+        antecedentesPenalesPdf: 'misAntecedentesPenales',
+        contrasenia: password.value,
+      };
+
+      // Llama al método create del servicio TutorialsApiService para crear el arrendatario
+      await ArrendatarioService.create(arrendatarioData);
+
+      console.log("Arrendatario creado correctamente");
+    }
+  } catch (error) {
+    // Muestra el cuerpo de la respuesta del servidor en caso de error
+    console.error("Error al registrar usuario", error);
+    if (error.response) {
+      console.error("Respuesta del servidor:", error.response.data);
+    }
+  }
+};
 
 </script>
 
@@ -35,6 +97,9 @@ const correo = ref('');
                     </div>
 
                     <div>
+                      <label for="tipoUsuario" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Tipo de usuario</label>
+                      <pv-dropdown id="tipoUsuario" class="w-full md:w-30rem mb-5 w-30rem" :options="tipoUsuarioOptions" v-model="tipoUsuario" />
+
                         <label for="nombres" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Nombres</label>
                         <pv-input-text id="nombres" type="text" placeholder="Ingrese sus nombres" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="nombres" />
 
@@ -42,27 +107,34 @@ const correo = ref('');
                         <pv-input-text id="apellidos" type="text" placeholder="Ingrese sus apellidos" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
 
                         <label for="fechaNacimiento" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Fecha de nacimiento</label>
-                        <pv-input-text id="fechaNacimiento" type="text" placeholder="DD/MM/AAAA" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
+                        <div class="flex justify-between">
+                          <pv-input-text id="day" type="number" placeholder="DD" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.day" />
+                          <pv-input-text id="month" type="number" placeholder="MM" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.month" />
+                          <pv-input-text id="year" type="number" placeholder="AA" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.year" />
+                        </div>
 
-                        <label for="teléfono" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Teléfono</label>
-                        <pv-input-text id="teléfono" type="text" placeholder="+51 teléfono" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="apellidos" />
+                      <label for="teléfono" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Teléfono</label>
+                      <pv-input-text id="teléfono" type="number" placeholder="+51 teléfono" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="telefono" />
 
-                       
-                        <label for="correo" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo electrónico</label>
+
+
+
+                      <label for="correo" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo electrónico</label>
                         <pv-input-text id="correo" type="text" placeholder="Ex. mail@abc.com" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="correo" />
 
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Contraseña</label>
-                        <input class="p-inputtext p-component p-password-input w-full" data-pc-name="inputtext" data-pc-section="input" type="password" aria-controls="pv_id_9_panel" aria-expanded="false" aria-haspopup="true" placeholder="Password" style="padding: 1rem;">
-                        
-                        <div class="flex align-items-center justify-content-between mb-5 gap-5">
+                      <label for="password1" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Contraseña</label>
+                      <pv-input-text id="password" type="password" placeholder="Contraseña" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="password" />
+
+
+                      <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
                                 <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
                             </div>
                         </div>
-                     
-                        <router-link to="/login">
-                            <pv-button label="Registrarse" class="w-full p-3 text-xl"></pv-button>
-                        </router-link>
+
+                      <router-link to="/login">
+                        <pv-button @click="registerUser" label="Registrarse" class="w-full md:w-30rem p-3 text-xl"></pv-button>
+                      </router-link>
 
             
                     </div>
@@ -70,7 +142,6 @@ const correo = ref('');
             </div>
         </div>
     </div>
-    <AppConfig simple />
 </template>
 
 <style scoped>
@@ -116,4 +187,7 @@ const correo = ref('');
     color: white;
 }
 
+.w-30rem {
+  height: 3rem; /* Puedes ajustar la altura según tus necesidades */
+}
 </style>
