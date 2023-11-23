@@ -1,17 +1,53 @@
-<script setup>
+<script>
 import { useLayout } from '@/AutoYa/composables/layout'
 import { ref, computed } from 'vue';
 import AppConfig from '@/AutoYa/AppConfig.vue';
+import AuthService from "@/AutoYa/services/auth.service";
+import PropietarioService from "@/AutoYa/services/propietario.service";
+import { useRouter } from 'vue-router';
 
-const { layoutConfig } = useLayout();
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
 
-const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
+export default {
+  data() {
+    return {
+      layoutConfig: useLayout().layoutConfig,
+      email: '',
+      password: '',
+      checked: false,
+      router: useRouter(),
+      propietarioId: 0,
+    };
+  },
+  methods: {
+    async logeo() {
+      try {
+        const response = await AuthService.login({
+          email: this.email,
+          password: this.password
+        });
 
+        const propietariosResponse = await PropietarioService.getAll();
+        const propietarios = propietariosResponse.data;
+
+        const propietarioEncontrado = propietarios.find(propietario => propietario.correo === this.email);
+
+        if (propietarioEncontrado) {
+          console.log("Usuario autenticado correctamente", response);
+          localStorage.setItem("propietarioId", propietarioEncontrado.id);
+          console.log('Propietario ID:', localStorage.getItem("propietarioId"));
+          //this.$router.push({ name: 'init-propie', query: { propietarioId: propietarioEncontrado.id} });
+          this.router.push({path:"/init-propie"});
+
+        } else {
+          console.error("No existe un propietario con el correo proporcionado");
+        }
+
+      } catch (error) {
+        console.error("Error al autenticar usuario", error);
+      }
+    },
+  },
+};
 </script>
 
 <template>
@@ -27,10 +63,10 @@ const logoUrl = computed(() => {
 
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo</label>
-                        <pv-input-text id="email1" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                        <pv-input-text id="email1" type="text" placeholder="Correo electrónico" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Contraseña</label>
-                        <input class="p-inputtext p-component p-password-input w-full" data-pc-name="inputtext" data-pc-section="input" type="password" aria-controls="pv_id_9_panel" aria-expanded="false" aria-haspopup="true" placeholder="Password" style="padding: 1rem;">
+                      <pv-input-text id="password" type="password" placeholder="Contraseña" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="password" />
                 
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
@@ -38,21 +74,18 @@ const logoUrl = computed(() => {
                             </div>
                             <router-link to="/register" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">¿No estás registrado? Crea una cuenta</router-link>
                         </div>
-                        <router-link to="/init-propie">
-                             <pv-button label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
-                        </router-link>
+
+                        <pv-button @click="logeo" label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
 
                         <div class="TipoLoginUsuario">
-    <router-link to="/login">
-        <pv-button label="Ingresar como Arrendatario"></pv-button>
-    </router-link>
-    <router-link to="/login-propietario">
-        <pv-button label="Ingresar como Propietario"></pv-button>
-    </router-link>
-</div>
+                        <router-link to="/login">
+                            <pv-button label="Ingresar como Arrendatario"></pv-button>
+                        </router-link>
 
-
-
+                        <router-link to="/propietario">
+                            <pv-button label="Ingresar como Propietario"></pv-button>
+                        </router-link>
+                        </div>
                     </div>
                 </div>
             </div>

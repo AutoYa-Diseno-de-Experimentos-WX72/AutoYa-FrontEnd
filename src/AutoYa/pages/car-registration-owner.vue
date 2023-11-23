@@ -1,8 +1,11 @@
 <script>
 import Card from 'primevue/card';
+import Dropdown from 'primevue/dropdown';
+import VehiculoService from "@/AutoYa/services/vehiculo.service";
 export default {
   components: {
     Card,
+    Dropdown,
   },
   data() {
     return {
@@ -13,8 +16,94 @@ export default {
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
       ],
+      claseOptions: [
+        "Familiar",
+        "Deportivo",
+        "Cargo car",
+        "SUV",
+        "Sedan"
+      ],
+      transmisionOptions: [
+        "Automático",
+        "Manual"
+      ],
+      tiempoOptions: [
+          "Diario",
+          "Semanal",
+          "Mensual"
+      ],
+      selectedTiempo: null,
+      selectedTransmision: null,
+      selectedClase: null,
+      marca: null,
+      modelo: null,
+      velocidad: null,
+      consumo: null,
+      dimensiones: null,
+      peso: null,
+      tiempo: 0,
+      costoAlquiler: null,
+      lugarRecojo: null,
+      urlImagen: null,
+      mostrarInputUrlImagen: false,
     };
   },
+  methods: {
+    async registrarVehiculo() {
+      try {
+        const data = {
+          marca: this.marca,
+          modelo: this.modelo,
+          velocidadMax: parseInt(this.velocidad),
+          consumo: parseInt(this.consumo),
+          dimensiones: this.dimensiones,
+          peso: parseInt(this.peso),
+          clase: this.selectedClase,
+          transmision: this.selectedTransmision,
+          tiempo: parseInt(this.tiempo),
+          tipoTiempo: this.selectedTiempo,
+          costoAlquiler: parseInt(this.costoAlquiler),
+          lugarRecojo: this.lugarRecojo,
+          urlImagen: this.urlImagen,
+          contratoAlquilerPdf: localStorage.getItem("urlContrato"),
+          estadoRenta: "AVAILABLE",
+          propietarioId: parseInt(localStorage.getItem("propietarioId")),
+          arrendatarioId: null,
+          alquilerId: null
+        };
+
+        // Llamar al método create del servicio VehiculoService
+        await VehiculoService.create(data);
+
+        // Restablecer los campos después del registro exitoso
+        this.marca = null;
+        this.modelo = null;
+        this.velocidad = null;
+        this.consumo = null;
+        this.dimensiones = null;
+        this.peso = null;
+        this.tiempo = 0;
+        this.costoAlquiler = null;
+        this.lugarRecojo = null;
+        this.urlImagen = null;
+        localStorage.setItem("urlVehiculo", null);
+        localStorage.setItem("urlContrato", null);
+        this.selectedTiempo = null;
+        this.selectedClase = null;
+        this.selectedTransmision = null;
+
+        // Puedes agregar una notificación de éxito aquí si lo deseas
+        console.log('Vehículo registrado exitosamente.');
+      } catch (error) {
+        console.error('Error al registrar el vehículo', error);
+        // Puedes agregar una notificación de error aquí si lo deseas
+      }
+    },
+    subirImagen() {
+      // Guardar la URL de la imagen en el localStorage
+      localStorage.setItem("urlVehiculo", this.urlImagen);
+    },
+  }
 };
 </script>
 
@@ -47,16 +136,14 @@ export default {
             </pv-button>
           </router-link>
           <router-link to="/profile-owner">
-            <!-- Agrega la imagen a la derecha -->
-            <router-link to="/login">
+
               <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
                 alt="Usuario"
                 style="height: 30px; margin-left: 20px; cursor: pointer;"
               />
-            </router-link>
-
           </router-link>
+
         </div>
       </template>
     </pv-toolbar>
@@ -72,33 +159,36 @@ export default {
           <div class="input-grid">
             <div class="input-column">
               <p style="font-family: 'Poppins',sans-serif"><strong>Marca</strong></p>
-              <pv-input placeholder="Marca" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Velocidad Max</strong></p>
-              <pv-input placeholder="Velocidad Max" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Largo/Ancho/Alto</strong></p>
-              <pv-input placeholder="Largo/Ancho/Alto" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-input placeholder="Marca" v-model="marca" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <p style="font-family: 'Poppins',sans-serif"><strong>Velocidad Max Km/Hr</strong></p>
+              <pv-input placeholder="Velocidad Max Km/Hr" v-model="velocidad" type="number" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <p style="font-family: 'Poppins',sans-serif"><strong>Dimensiones An-Lg-At</strong></p>
+              <pv-input placeholder="Dimensiones An-Lg-At" v-model="dimensiones" style="font-family: 'Poppins',sans-serif"></pv-input>
               <p style="font-family: 'Poppins',sans-serif"><strong>Clase</strong></p>
-              <pv-input placeholder="Clase" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Tiempo de Alquiler</strong></p>
-              <pv-input placeholder="Tiempo de Alquiler" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <Dropdown :options="claseOptions" placeholder="Selecciona una clase" v-model="selectedClase" style="font-family: 'Poppins',sans-serif" />
+              <p style="font-family: 'Poppins',sans-serif"><strong>Tipo de tiempo</strong></p>
+              <Dropdown :options="tiempoOptions" placeholder="Selecciona un tipo de tiempo" v-model="selectedTiempo" style="font-family: 'Poppins',sans-serif" />
               <p style="font-family: 'Poppins',sans-serif"><strong>Lugar de recojo del vehículo</strong></p>
-              <pv-input placeholder="Lugar de recojo del vehículo" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-input placeholder="Lugar de recojo del vehículo" v-model="lugarRecojo" style="font-family: 'Poppins',sans-serif"></pv-input>
             </div>
             <div class="input-column">
               <p style="font-family: 'Poppins',sans-serif"><strong>Modelo</strong></p>
-              <pv-input placeholder="Modelo" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-input placeholder="Modelo" v-model="modelo" style="font-family: 'Poppins',sans-serif"></pv-input>
               <p style="font-family: 'Poppins',sans-serif"><strong>Consumo</strong></p>
-              <pv-input placeholder="Consumo" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-input placeholder="Consumo" v-model="consumo" type="number" style="font-family: 'Poppins',sans-serif"></pv-input>
               <p style="font-family: 'Poppins',sans-serif"><strong>Peso</strong></p>
-              <pv-input placeholder="Peso" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-input placeholder="Peso" v-model="peso" type="number" style="font-family: 'Poppins',sans-serif"></pv-input>
               <p style="font-family: 'Poppins',sans-serif"><strong>Transmisión</strong></p>
-              <pv-input placeholder="Transmisión" style="font-family: 'Poppins',sans-serif"></pv-input>
-              <p style="font-family: 'Poppins',sans-serif"><strong>Costo de alquielr al mes</strong></p>
-              <pv-input placeholder="Costo de alquiler al mes" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <Dropdown :options="transmisionOptions" placeholder="Selecciona una transmisión" v-model="selectedTransmision" style="font-family: 'Poppins',sans-serif" />
+              <p style="font-family: 'Poppins',sans-serif"><strong>Costo de alquiler por tiempo</strong></p>
+              <pv-input placeholder="Costo de alquiler por tiempo" v-model="costoAlquiler" type="number" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <p style="font-family: 'Poppins',sans-serif"><strong>URL de la imagen del vehículo</strong></p>
+              <pv-input placeholder="URL de la imagen del vehículo" v-model="urlImagen" style="font-family: 'Poppins',sans-serif"></pv-input>
+              <pv-button style="width: auto;" class="custom-button2" @click="subirImagen">SUBIR IMAGEN</pv-button>
             </div>
           </div>
           <div class="input-column">
-            <Button label="REGISTRAR" class="custom-button2" @click="">REGISTRAR</Button>
+            <Button label="REGISTRAR" class="custom-button2" @click="registrarVehiculo">REGISTRAR</Button>
           </div>
         </template>
       </Card>
@@ -108,8 +198,6 @@ export default {
         <template #title></template>
         <template #content>
           <div class="button-container">
-            <Button label="SUBIR FOTOS" class="custom-button2">SUBIR FOTOS</button>
-            <div class="button-space"></div>
             <router-link to="/rent-contract-owner">
               <Button label="CREAR CONTRATO DE ALQUILER" class="custom-button3">CREAR CONTRATO DE ALQUILER</Button>
             </router-link>

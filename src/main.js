@@ -27,7 +27,6 @@ import Password from 'primevue/password';
 
 
 
-
 createApp(App)
     .use(router)
     .use(PrimeVue, { ripple: true })

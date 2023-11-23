@@ -57,13 +57,12 @@
     </div>
     <div class="notifications-section">
       <h2 class="section-title">Notificaciones</h2>
-      <div class="notification-card">
-        <p class="notification">Piero Torres Arias envió una solicitud de alquiler del vehiculo Toyota Prius</p>
-        <a href="#" class="view-notification">Ver Notificación</a>
-      </div>
-      <div class="notification-card">
-        <p class="notification">Jorge Paredes Cano envió una solicitud de alquiler del vehiculo Toyota Prius</p>
-        <a href="#" class="view-notification">Ver Notificación</a>
+      <div v-if="notificacionesFiltradas.length === 0">No hay notificaciones</div>
+      <div v-else>
+        <div v-for="notification in notificacionesFiltradas" :key="notification.id" class="notification-card">
+          <p class="notification">{{ notification.body }}</p>
+          <router-link :to="'/notification/' + notification.id" class="view-notification">Ver</router-link>
+        </div>
       </div>
     </div>
     <RouterView />
@@ -71,6 +70,7 @@
 </template>
 
 <script>
+import NotificacionService from "@/AutoYa/services/notificacion.service";
 export default{
   name: "InicioPropie",
   data() {
@@ -82,8 +82,31 @@ export default{
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
       ],
+      notifications: [],
+      notificacionesFiltradas: [],
+      propietarioId: null,
     };
   },
+  methods: {
+    async loadNotifications() {
+      try {
+        console.log('Propietario ID:', this.propietarioId);
+        const response = await NotificacionService.getAll();
+        console.log(response.data);
+        this.notifications = response.data;
+        this.notificacionesFiltradas = this.notifications.filter(notification => notification.propietarioId == this.propietarioId);
+        console.log('Notificaciones:', this.notifications);
+        console.log('Notificaciones filtradas:', this.notificacionesFiltradas);
+      } catch (error) {
+        console.error('Error al cargar las notificaciones', error);
+      }
+    },
+  },
+  created() {
+    this.propietarioId = localStorage.getItem("propietarioId");
+    console.log('Propietario ID:', localStorage.getItem("propietarioId"));
+    this.loadNotifications();
+  }
 };
 </script>
 
