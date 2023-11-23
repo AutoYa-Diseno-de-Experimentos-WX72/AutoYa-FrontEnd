@@ -11,6 +11,7 @@
       </template>
       <template #end>
         <div class="flex-column">
+
           <router-link
               v-for="item in items"
               :to="item.to"
@@ -26,7 +27,7 @@
               {{ item.label }}
             </pv-button>
           </router-link>
-          <router-link to="/home">
+          <router-link to="/profile-owner">
             <!-- Agrega la imagen a la derecha -->
             <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
@@ -34,24 +35,25 @@
                 style="height: 30px; margin-left: 20px; cursor: pointer;"
             />
           </router-link>
+
         </div>
       </template>
     </pv-toolbar>
   </header>
   <div class="notifications-section">
     <h2 class="section-title">Notificaciones</h2>
-    <div class="notification-card">
-      <p class="notification">Piero Torres Arias envió una solicitud de alquiler del vehiculo Toyota Prius</p>
-      <a href="#" class="view-notification">Ver Solicitud</a>
+    <div v-if="notificacionesFiltradas.length === 0" class="notification-card">
+      <p class="notification">No hay notificaciones disponibles.</p>
     </div>
-    <div class="notification-card">
-      <p class="notification">Jorge Paredes Cano envió una solicitud de alquiler del vehiculo Toyota Prius</p>
-      <a href="#" class="view-notification">Ver Solicitud</a>
+    <div v-for="notification in notificacionesFiltradas" :key="notification.id" class="notification-card">
+      <p class="notification">{{ notification.body }}</p>
+<!--      <router-link :to="notification.enlace" class="view-notification">Ver Solicitud</router-link> CREAR PÁGINA PARA QUE EL PROPIETARIO ACEPTE O DECLINE LA SOLICITUD DE ALQUIER-->
     </div>
   </div>
 </template>
 
 <script>
+import NotificacionService from "@/AutoYa/services/notificacion.service";
 export default {
   name: "NotificacionesPropie",
   data() {
@@ -63,8 +65,31 @@ export default {
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
       ],
+      notifications: [],
+      notificacionesFiltradas: [],
+      propietarioId: null,
     };
   },
+  methods: {
+    async loadNotifications() {
+      try {
+        console.log('Propietario ID:', this.propietarioId);
+        const response = await NotificacionService.getAll();
+        console.log(response.data);
+        this.notifications = response.data;
+        this.notificacionesFiltradas = this.notifications.filter(notification => notification.propietarioId == this.propietarioId);
+        console.log('Notificaciones:', this.notifications);
+        console.log('Notificaciones filtradas:', this.notificacionesFiltradas);
+      } catch (error) {
+        console.error('Error al cargar las notificaciones', error);
+      }
+    },
+  },
+  created() {
+    this.propietarioId = localStorage.getItem("propietarioId");
+    console.log('Propietario ID:', localStorage.getItem("propietarioId"));
+    this.loadNotifications();
+  }
 };
 </script>
 

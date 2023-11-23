@@ -1,17 +1,53 @@
-<script setup>
+<script>
 import { useLayout } from '@/AutoYa/composables/layout'
 import { ref, computed } from 'vue';
 import AppConfig from '@/AutoYa/AppConfig.vue';
+import AuthService from "@/AutoYa/services/auth.service";
+import ArrendatarioService from "@/AutoYa/services/arrendatario.service";
+import { useRouter } from 'vue-router';
 
-const { layoutConfig } = useLayout();
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
+export default {
+  data() {
+    return {
+      layoutConfig: useLayout().layoutConfig,
+      email: ref(''),
+      password: ref(''),
+      checked: ref(false),
+      router: useRouter(),
+    };
+  },
+  methods: {
+    async logeo() {
+      try {
+        // Llama al método login del servicio AuthService
+        const response = await AuthService.login({
+          email: this.email,
+          password: this.password
+        });
 
-const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
+        // Obtén todos los arrendatarios
+        const arrendatariosResponse = await ArrendatarioService.getAll();
+        const arrendatarios = arrendatariosResponse.data;
 
+        // Verifica si existe un arrendatario con el correo proporcionado
+        const arrendatarioEncontrado = arrendatarios.find(arrendatario => arrendatario.correo === this.email);
+
+        if (arrendatarioEncontrado) {
+          // Si la autenticación es exitosa y hay un arrendatario con el correo, redirige a la página '/home'
+          console.log("Usuario autenticado correctamente", response);
+          this.router.push('/home');
+        } else {
+          // Si no hay un arrendatario con el correo, muestra un mensaje de error
+          console.error("No existe un arrendatario con el correo proporcionado");
+        }
+
+      } catch (error) {
+        // Maneja el error, por ejemplo, muestra un mensaje de error al usuario
+        console.error("Error al autenticar usuario", error);
+      }
+    },
+  },
+};
 </script>
 
 <template>
@@ -27,10 +63,10 @@ const logoUrl = computed(() => {
 
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Correo</label>
-                        <pv-input-text id="email1" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                        <pv-input-text id="email1" type="text" placeholder="Correo electrónico" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2" style="font-family: 'Poppins', sans-serif;">Contraseña</label>
-                        <input class="p-inputtext p-component p-password-input w-full" data-pc-name="inputtext" data-pc-section="input" type="password" aria-controls="pv_id_9_panel" aria-expanded="false" aria-haspopup="true" placeholder="Password" style="padding: 1rem;">
+                        <pv-input-text id="email1" type="password" placeholder="Contraseña" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="password" />
                 
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
@@ -38,21 +74,17 @@ const logoUrl = computed(() => {
                             </div>
                             <router-link to="/register" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: #FF7A00; margin-top: 15px;">¿No estás registrado? Crea una cuenta</router-link>
                         </div>
-                        <router-link to="/home">
-                             <pv-button label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
-                        </router-link>
+
+                        <pv-button @click="logeo" label="Iniciar Sesión" class="w-full p-3 text-xl"></pv-button>
 
                         <div class="TipoLoginUsuario">
-    <router-link to="/login">
-        <pv-button label="Ingresar como Arrendatario"></pv-button>
-    </router-link>
-    <router-link to="/propietario">
-        <pv-button label="Ingresar como Propietario"></pv-button>
-    </router-link>
-</div>
-
-
-
+                        <router-link to="/login">
+                            <pv-button label="Ingresar como Arrendatario"></pv-button>
+                        </router-link>
+                        <router-link to="/propietario">
+                            <pv-button label="Ingresar como Propietario"></pv-button>
+                        </router-link>
+                        </div>
                     </div>
                 </div>
             </div>

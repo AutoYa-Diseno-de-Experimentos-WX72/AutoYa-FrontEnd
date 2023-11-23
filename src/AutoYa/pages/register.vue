@@ -1,46 +1,35 @@
 <script setup>
 import { useLayout } from '@/AutoYa/composables/layout'
 import { ref, computed } from 'vue';
-import AppConfig from '@/AutoYa/AppConfig.vue';
 import AuthService from "@/AutoYa/services/auth.service";
 import ArrendatarioService from "@/AutoYa/services/arrendatario.service";
+import PropietarioService from "@/AutoYa/services/propietario.service";
 
 const { layoutConfig } = useLayout();
 const email = ref('');
 
 const checked = ref(false);
-
-const fechaNacimiento = ref({
-  day: '',
-  month: '',
-  year: '',
-});
-
-const customFormat = 'yyyy-MM-dd';
-
 const tipoUsuario = ref(''); // Agrega esta línea para la variable del tipo de usuario
-
 const tipoUsuarioOptions = ['Arrendatario', 'Propietario'];
-
-const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
-
 const nombres = ref('');
 const apellidos = ref('');
 const telefono = ref(0);
 const correo = ref('');
 const password = ref('');
+const day = ref(''); // Agrega esta línea para la variable del día de nacimiento
+const month = ref(''); // Agrega esta línea para la variable del mes de nacimiento
+const year = ref('');
 
 const registerUser = async () => {
   // Verifica que los campos requeridos estén llenos
-  if (!nombres.value || !apellidos.value || !correo.value || !password.value || !tipoUsuario.value) {
+  if (!nombres.value || !apellidos.value || !correo.value || !password.value || !tipoUsuario.value || !day.value || !month.value || !year.value || !telefono.value) {
     // Manejar el caso en el que los campos estén vacíos
     console.error("Todos los campos son obligatorios.");
+    console.log(`${nombres.value}, ${apellidos.value}, ${correo.value}, ${password.value}, ${tipoUsuario.value}, ${day.value}, ${month.value}, ${year.value}, ${telefono.value}`)
     return;
   }
 
-  // Construye un objeto de usuario con los datos ingresados por el usuario
+  // Construye un objeto de usuario de security con los datos ingresados por el usuario
   const user = {
     firstName: nombres.value,
     lastName: apellidos.value,
@@ -49,7 +38,7 @@ const registerUser = async () => {
   };
 
   try {
-    // Intenta registrar al usuario utilizando el servicio AuthService
+    // Intenta registrar al usuario de security utilizando el servicio AuthService
     const response = await AuthService.register(user);
 
     // Muestra un mensaje o realiza alguna acción adicional si es necesario
@@ -57,7 +46,7 @@ const registerUser = async () => {
 
     // Si el tipo de usuario es "Arrendatario", crea un arrendatario
     if (tipoUsuario.value === 'Arrendatario') {
-      const fechaNacimientoFormatted = `${fechaNacimiento.year}-${fechaNacimiento.month}-${fechaNacimiento.day}T00:00:00.000Z`;
+      const fechaNacimientoFormatted = `${day.value}-${month.value}-${year.value}`;
 
       const arrendatarioData = {
         nombres: nombres.value,
@@ -69,10 +58,29 @@ const registerUser = async () => {
         contrasenia: password.value,
       };
 
-      // Llama al método create del servicio TutorialsApiService para crear el arrendatario
+      // Llama al método create del servicio ArrendatarioService para crear el arrendatario
       await ArrendatarioService.create(arrendatarioData);
 
       console.log("Arrendatario creado correctamente");
+    }
+
+    // Si el tipo de usuario es "Arrendatario", crea un arrendatario
+    if (tipoUsuario.value === 'Propietario') {
+      const fechaNacimientoFormatted = `${day.value}-${month.value}-${year.value}`;
+
+      const propietarioData = {
+        nombres: nombres.value,
+        apellidos: apellidos.value,
+        fechaNacimiento: fechaNacimientoFormatted,
+        telefono: telefono.value,
+        correo: correo.value,
+        contrasenia: password.value,
+      };
+
+      // Llama al método create del servicio PropietarioService para crear el propietario
+      await PropietarioService.create(propietarioData);
+
+      console.log("Propietario creado correctamente");
     }
   } catch (error) {
     // Muestra el cuerpo de la respuesta del servidor en caso de error
@@ -108,9 +116,9 @@ const registerUser = async () => {
 
                         <label for="fechaNacimiento" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Fecha de nacimiento</label>
                         <div class="flex justify-between">
-                          <pv-input-text id="day" type="number" placeholder="DD" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.day" />
-                          <pv-input-text id="month" type="number" placeholder="MM" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.month" />
-                          <pv-input-text id="year" type="number" placeholder="AA" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="fechaNacimiento.year" />
+                          <pv-input-text id="day" type="number" placeholder="DD" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="day" />
+                          <pv-input-text id="month" type="number" placeholder="MM" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="month" />
+                          <pv-input-text id="year" type="number" placeholder="AA" class="w-1/4 md:w-8rem mb-5" style="padding: 1rem" v-model="year" />
                         </div>
 
                       <label for="teléfono" class="block text-900 text-xl font-medium mb-2" style="font-family: 'Poppins', sans-serif;">Teléfono</label>

@@ -13,7 +13,20 @@ export default {
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
       ],
+      urlContrato: null,
+      urlImagen: null,
     };
+  },
+  created(){
+    this.urlImagen = localStorage.getItem("urlVehiculo");
+  },
+  methods: {
+    subirContrato() {
+      localStorage.setItem("urlContrato", this.urlContrato);
+      // Puedes agregar más lógica aquí si es necesario
+      console.log('Contrato subido exitosamente.');
+      console.log(localStorage.getItem("urlContrato"));
+    },
   },
 };
 </script>
@@ -68,9 +81,10 @@ export default {
           <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">CONTRATO DE ALQUILER</h1>
             <p style="font-family: 'Poppins',sans-serif">Cree el contrato de alquiler que mejor le parezca</p>
-            <button class="custom-button3">Generar contrato predeterminado</button>
-            <button class="custom-button3">Subir contrato en PDF</button>
-            <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; max-height: 300px;">
+            <p style="font-family: 'Poppins',sans-serif"><strong>URL del contrato de alquiler</strong></p>
+            <pv-input placeholder="URL del contrato de alquiler" v-model="urlContrato" style="font-family: 'Poppins',sans-serif"></pv-input>
+            <button @click="subirContrato" class="custom-button3">Subir contrato</button>
+            <img :src="urlImagen" alt="Toyota Prius" style="max-width: 100%; max-height: 300px;">
             <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
           </div>
         </template>
@@ -108,9 +122,6 @@ export default {
             <p style="text-align: center;"><em>(Firma del Arrendador)</em> <em>(Firma del Arrendatario)</em></p>
             <p style="text-align: center;"><strong>Fecha:</strong> [Fecha de firma del contrato]</p>
             <br><br>
-            <div style="text-align: center; font-family: 'Poppins', sans-serif;">
-              <button style="background-color: #FF7A00; color: white;" class="custom-button2">Subir Contrato</button>
-            </div>
             <br><br>
           </div>
         </template>
