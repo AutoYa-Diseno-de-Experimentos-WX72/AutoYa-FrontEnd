@@ -35,6 +35,11 @@ export default {
         if (arrendatarioEncontrado) {
           // Si la autenticación es exitosa y hay un arrendatario con el correo, redirige a la página '/home'
           console.log("Usuario autenticado correctamente", response);
+          localStorage.setItem("arrendatarioId", arrendatarioEncontrado.id);
+          localStorage.setItem("arrendatarioNombres", arrendatarioEncontrado.nombres);
+          localStorage.setItem("arrendatarioApellidos", arrendatarioEncontrado.apellidos);
+          localStorage.setItem("fotoTenant", "https://i.postimg.cc/Fs9Z3g3V/usuario-1.png");
+          console.log("Arrendatario id", localStorage.getItem("arrendatarioId"));
           this.router.push('/home');
         } else {
           // Si no hay un arrendatario con el correo, muestra un mensaje de error

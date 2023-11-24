@@ -14,6 +14,10 @@ import RentOwner from "@/AutoYa/pages/rent-owner.vue";
 import RentContractOwner from "@/AutoYa/pages/rent-contract-owner.vue";
 import CarSearchTenant from "@/AutoYa/pages/car-search-tenant.vue";
 import ManteinanceTenant from "@/AutoYa/pages/manteinance-tenant.vue";
+import UpdateOwner from "@/AutoYa/pages/update-owner.vue";
+import UpdateTenant from "@/AutoYa/pages/update-tenant.vue";
+import RentCar from "@/AutoYa/pages/rent-car.vue";
+import ReadRequest from "@/AutoYa/pages/read-request.vue";
 
 
 const router = createRouter({
@@ -97,6 +101,27 @@ const router = createRouter({
       path: "/manteinance-tenant",
       name: "manteinance-tenant",
       component: ManteinanceTenant,
+    },
+    {
+      path: "/update-owner",
+      name: "update-owner",
+      component: UpdateOwner,
+    },
+    {
+      path: "/update-tenant",
+      name: "update-tenant",
+      component: UpdateTenant,
+    },
+    {
+      path: "/rent-car",
+      name: "rent-car",
+      component: RentCar,
+    }
+    ,
+    {
+      path: "/read-request",
+      name: "read-request",
+      component: ReadRequest,
     }
   ]
 })

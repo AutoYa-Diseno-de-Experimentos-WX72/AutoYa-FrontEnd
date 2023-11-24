@@ -42,39 +42,52 @@
   <div class="container">
     <div class="half-width-card">
       <Card>
-        <template #title>
-        </template>
+        <template #title></template>
         <template #content>
-          <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Busca un auto</h1>
-          <p style="font-family: 'Poppins',sans-serif">Ubicación</p>
-          <InputText v-model="value1" placeholder="Ubicación" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Precio</p>
-          <InputText v-model="value1" placeholder="Precio" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Tiempo de alquiler</p>
-          <InputText v-model="value1" placeholder="Tiempo de alquiler" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Marca</p>
-          <InputText v-model="value1" placeholder="Marca" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Modelo</p>
-          <InputText v-model="value1" placeholder="Modelo" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Clase</p>
-          <InputText v-model="value1" placeholder="Clase" style="font-family: 'Poppins',sans-serif"/>
-          <p style="font-family: 'Poppins',sans-serif">Transmisión</p>
-          <InputText v-model="value1" placeholder="Transmisión" style="font-family: 'Poppins',sans-serif"/>
+          <h1 style="font-family: 'Poppins', sans-serif; color:#FF7A00">Busca un auto</h1>
+          <p style="font-family: 'Poppins', sans-serif">Tiempo de alquiler</p>
+          <InputText v-model="filtro.tiempoAlquiler" placeholder="Tiempo de alquiler" style="font-family: 'Poppins', sans-serif"/>
+          <p style="font-family: 'Poppins', sans-serif">Marca</p>
+          <InputText v-model="filtro.marca" placeholder="Marca" style="font-family: 'Poppins', sans-serif"/>
+          <p style="font-family: 'Poppins', sans-serif">Modelo</p>
+          <InputText v-model="filtro.modelo" placeholder="Modelo" style="font-family: 'Poppins', sans-serif"/>
+          <p style="font-family: 'Poppins', sans-serif">Clase</p>
+          <InputText v-model="filtro.clase" placeholder="Clase" style="font-family: 'Poppins', sans-serif"/>
+          <p style="font-family: 'Poppins', sans-serif">Transmisión</p>
+          <InputText v-model="filtro.transmision" placeholder="Transmisión" style="font-family: 'Poppins', sans-serif"/>
+
+          <!-- Agrega el botón de búsqueda -->
+          <pv-button class="search-button" @click="buscarAutos">Buscar</pv-button>
         </template>
       </Card>
     </div>
     <div class="half-width-card">
-      <Card>
-        <template #title></template>
-        <template #content>
-          <div style="text-align: center;">
-            <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto; max-height: 200px;" />
-          </div>
-          <div style="text-align: center; margin-top: 10px;">
-            <button class="custom-button3">Ver contrato de alquiler</button>
+      <h1 style="font-family: 'Poppins',sans-serif; color: #FF7A00; text-align: center;">Vehiculos</h1>
+
+      <div v-if="vehiculosDisponibles.length === 0" style="text-align: center; margin-top: 20px;">
+        <h2 style="font-family: 'Poppins',sans-serif">No hay vehículos disponibles para alquilar por el momento.</h2>
+      </div>
+
+      <Carousel v-else :value="vehiculosDisponibles" :numVisible="1" :numScroll="1" :responsiveOptions="responsiveOptions" circular :autoplayInterval="5000">
+        <!-- Utiliza la plantilla #item directamente para cada vehículo -->
+        <template #item="slotProps">
+          <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+            <div class="mb-3">
+              <img :src="slotProps.data.urlImagen" alt="Imagen de vehículo" class="w-6 shadow-2" />
+              <div>
+                <h1 style="font-family: 'Poppins',sans-serif">Marca: {{ slotProps.data.marca }}</h1>
+                <h2 style="font-family: 'Poppins',sans-serif">Modelo: {{ slotProps.data.modelo }}</h2>
+                <h2 style="font-family: 'Poppins',sans-serif">Clase: {{ slotProps.data.clase }}</h2>
+                <h2 style="font-family: 'Poppins',sans-serif">Transmisión: {{ slotProps.data.transmision }}</h2>
+                <h2 style="font-family: 'Poppins',sans-serif">Tipo de alquiler: {{ slotProps.data.tipoTiempo }}</h2>
+                <h2 style="font-family: 'Poppins',sans-serif">Costo de alquiler: {{ slotProps.data.costoAlquiler }}</h2>
+                <pv-button @click="alquilarAuto(slotProps.data.id)" class="font-button">Alquilar</pv-button><br>
+              </div>
+            </div>
           </div>
         </template>
-      </Card>
+      </Carousel>
+
     </div>
   </div>
 
@@ -82,10 +95,14 @@
 
 <script>
 import Card from "primevue/card"
+import Carousel from "primevue/carousel";
 import InputText from "primevue/inputtext";
+import VehiculoService from "@/AutoYa/services/vehiculo.service";
+import {useRouter} from "vue-router";
 export default{
   components: {
     Card,
+    Carousel,
     InputText,
   },
   data() {
@@ -96,36 +113,67 @@ export default{
         { label: "Buscar Autos", to: "/car-search-tenant" },
         { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: "Solicitudes", to: "/requests-tenant" },
       ],
+      router: useRouter(),
+      value1: null,
       cardCount: 4,
+      vehiculos: [],
+      vehiculos2: [],
+      filtro: {
+        tiempoAlquiler: null,
+        marca: null,
+        modelo: null,
+        clase: null,
+        transmision: null,
+      },
     };
   },
-  methods: {
-    rotateCarousel(step) {
-      const cardContainer = document.querySelector(".carousel-cards");
-      const hiddenCards = document.querySelectorAll(".hidden-card");
-      const visibleCards = cardContainer.querySelectorAll(".card:not(.hidden-card)");
-
-      const totalVisibleCards = visibleCards.length;
-      const totalHiddenCards = hiddenCards.length;
-
-      const newCardCount = this.cardCount + step;
-
-      if (newCardCount >= 1 && newCardCount <= totalVisibleCards + totalHiddenCards) {
-        this.cardCount = newCardCount;
-
-        hiddenCards.forEach((card) => {
-          card.style.display = "none";
-        });
-
-        for (let i = 0; i < this.cardCount; i++) {
-          if (visibleCards[i]) {
-            visibleCards[i].style.display = "flex";
-          }
-        }
-      }
+  computed: {
+    vehiculosDisponibles() {
+      return this.vehiculos.filter(vehiculo => vehiculo.estadoRenta === "Disponible");
     },
+    vehiculosDisponiblesFiltrados() {
+      // Filtrar la lista de vehículos disponibles considerando solo los campos no vacíos
+      return this.vehiculosDisponibles.filter(vehiculo => {
+        return (
+            (!this.filtro.tiempoAlquiler || vehiculo.tiempoAlquiler.includes(this.filtro.tiempoAlquiler)) ||
+            (!this.filtro.marca || vehiculo.marca.includes(this.filtro.marca)) ||
+            (!this.filtro.modelo || vehiculo.modelo.includes(this.filtro.modelo)) ||
+            (!this.filtro.clase || vehiculo.clase.includes(this.filtro.clase)) ||
+            (!this.filtro.transmision || vehiculo.transmision.includes(this.filtro.transmision))
+        );
+      });
+    },
+  },
+  methods: {
+    alquilarAuto(vehiculoId) {
+      localStorage.setItem("vehiculoId", vehiculoId);
+      this.router.push({path:"/rent-car"});
+    },
+    buscarAutos() {
+      // Filtrar la lista de vehículos considerando solo los campos no vacíos
+      this.vehiculosDisponibles = this.vehiculos.filter(vehiculo => {
+        return (
+            (!this.filtro.tiempoAlquiler || vehiculo.tiempoAlquiler.includes(this.filtro.tiempoAlquiler)) &&
+            (!this.filtro.marca || vehiculo.marca.toLowerCase().includes(this.filtro.marca.toLowerCase())) &&
+            (!this.filtro.modelo || vehiculo.modelo.toLowerCase().includes(this.filtro.modelo.toLowerCase())) &&
+            (!this.filtro.clase || vehiculo.clase.toLowerCase().includes(this.filtro.clase.toLowerCase())) &&
+            (!this.filtro.transmision || vehiculo.transmision.toLowerCase().includes(this.filtro.transmision.toLowerCase()))
+        );
+      });
+    },
+  },
+  created() {
+    // Obtiene la lista de vehículos al cargar el componente
+    VehiculoService.getAll()
+        .then((response) => {
+          this.vehiculos = response.data;
+          console.log("Vehiculos: ", this.vehiculos);
+          console.log("Response data: ", response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener la lista de vehículos:", error);
+        });
   },
 };
 </script>
@@ -292,6 +340,18 @@ input {
   margin: 0.5rem;
   box-sizing: border-box;
   max-width: 50%;
+}
+
+.font-button {
+  margin: 2px 0;
+  background-color: black !important;
+  color: white !important;
+}
+
+.font-button:hover,
+.font-button:focus{
+  background-color: #14131B !important;
+  color: white !important;
 }
 
 </style>

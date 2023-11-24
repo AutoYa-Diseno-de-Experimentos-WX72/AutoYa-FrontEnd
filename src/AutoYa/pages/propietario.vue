@@ -34,6 +34,7 @@ export default {
         if (propietarioEncontrado) {
           console.log("Usuario autenticado correctamente", response);
           localStorage.setItem("propietarioId", propietarioEncontrado.id);
+          localStorage.setItem("fotoOwner", "https://i.postimg.cc/Fs9Z3g3V/usuario-1.png")
           console.log('Propietario ID:', localStorage.getItem("propietarioId"));
           //this.$router.push({ name: 'init-propie', query: { propietarioId: propietarioEncontrado.id} });
           this.router.push({path:"/init-propie"});

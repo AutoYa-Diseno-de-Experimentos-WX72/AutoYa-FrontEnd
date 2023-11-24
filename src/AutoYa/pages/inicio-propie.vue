@@ -50,7 +50,11 @@
         <div class="input-button-container">
           <div class="input-container">
             <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-            <button class="share-button">Comparte tu auto</button>
+
+            <router-link to="/car-registration-owner">
+              <button class="share-button">Comparte tu auto</button>
+            </router-link>
+
           </div>
         </div>
       </div>

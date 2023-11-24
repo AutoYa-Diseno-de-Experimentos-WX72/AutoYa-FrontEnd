@@ -1,5 +1,6 @@
 <script>
 import Card from "primevue/card";
+import VehiculoService from "@/AutoYa/services/vehiculo.service";
 
 export default {
   components: {
@@ -13,10 +14,26 @@ export default {
         { label: "Buscar Autos", to: "/car-search-tenant" },
         { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: "Solicitudes", to: "/requests-tenant" },
       ],
+      vehiculos: [],
+      vehiculosFiltrados: [],
     };
   },
+  methods: {
+    async cargarVehiculos() {
+      try {
+        const response = await VehiculoService.getAll();
+        // Filtrar vehículos por el id del arrendatario almacenado en localStorage
+        this.vehiculos = response.data;
+        this.vehiculosFiltrados = this.vehiculos.filter(vehiculo => vehiculo.arrendatario && vehiculo.arrendatario.id === parseInt(localStorage.getItem("arrendatarioId")));
+      } catch (error) {
+        console.error("Error al cargar los vehículos:", error);
+      }
+    },
+  },
+  created() {
+    this.cargarVehiculos();
+  }
 };
 </script>
 
@@ -48,7 +65,7 @@ export default {
               {{ item.label }}
             </pv-button>
           </router-link>
-          <router-link to="/home">
+          <router-link to="/profile-tenant">
             <!-- Agrega la imagen a la derecha -->
             <img
                 src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png"
@@ -62,69 +79,24 @@ export default {
   </header>
 
   <div class="p-grid">
-    <div class="p-col-12 p-md-6">
-      <Card>
-        <template #title></template>
-        <template #content>
-          <div style="display: grid; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr;">
-            <div style="grid-row: 1; grid-column: 1; text-align: left;">
-              <h1 style="font-family: 'Poppins',sans-serif; color:#FF7A00">ALQUILER</h1>
-            </div>
-            <div style="grid-row: 2; grid-column: 1; text-align: left;">
-              <p style="font-family: 'Poppins',sans-serif">Autos alquilados actualmente</p>
-            </div>
-          </div>
-        </template>
-      </Card>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <Card>
-        <template #title></template>
-        <template #content>
-          <div style="display: flex; flex-wrap: wrap;">
-            <div style="flex: 20%; margin: 5px;">
-              <Card>
-                <template #title></template>
-                <template #content>
-                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
-                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
-                  <p style="font-family: 'Poppins',sans-serif">Propietario: Alonso Robles</p>
-                  <p style="font-family: 'Poppins',sans-serif">Celular: +51 999 999 999</p>
-                  <p style="font-family: 'Poppins',sans-serif">Fecha de inicio de contrato: 28/09/2023</p>
-                  <p style="font-family: 'Poppins',sans-serif">Fecha de finalizacion de contrato: 28/10/2023</p>
-                  <h2 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Solicitud aceptada</h2>
-                  <button class="custom-button3">Pagar</button>
-                </template>
-              </Card>
-            </div>
-            <div style="flex: 20%; margin: 5px;">
-              <Card>
-                <template #title></template>
-                <template #content>
-                  <img src="https://www.autobild.es/sites/autobild.es/public/dc/fotos/Toyota_Prius_2023_02_0.jpg" alt="Toyota Prius" style="max-width: 100%; height: auto;" />
-                  <p style="font-family: 'Poppins',sans-serif">Marca/Modelo: Toyota/Prius</p>
-                  <p style="font-family: 'Poppins',sans-serif">Propietario: Alonso Robles</p>
-                  <p style="font-family: 'Poppins',sans-serif">Celular: +51 999 999 999</p>
-                  <p style="font-family: 'Poppins',sans-serif">Fecha de inicio de contrato: 28/09/2023</p>
-                  <p style="font-family: 'Poppins',sans-serif">Fecha de finalizacion de contrato: 28/10/2023</p>
-                  <h2 style="font-family: 'Poppins',sans-serif; color:#FF7A00">Solicitud aceptada</h2>
-                  <button class="custom-button3">Pagar</button>
-                </template>
-              </Card>
-            </div>
-            <div style="flex: 20%; margin: 5px;">
-              <Card>
-                <template #title></template>
-                <template #content>
-                  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                    <button class="custom-button3">Alquilar un auto nuevo</button>
-                  </div>
-                </template>
-              </Card>
-            </div>
-          </div>
-        </template>
-      </Card>
+    <h1 style="font-family: 'Poppins', sans-serif; color: #FF7A00">Vehículos alquilados</h1>
+    <div class="card-container">
+      <div v-if="vehiculosFiltrados.length > 0" class="card-container">
+      <!-- Itera sobre los vehículos y muestra un card por cada uno -->
+        <div class="card-item" v-for="vehiculo in vehiculosFiltrados" :key="vehiculo.id">
+          <Card>
+            <template #title></template>
+            <template #content>
+              <!-- Contenido del card con la información del vehículo -->
+              <img :src="vehiculo.urlImagen" alt="Imagen del vehículo" style="max-width: 100%; height: auto;" />
+              <p style="font-family: 'Poppins', sans-serif">Id: {{ vehiculo.id }}</p>
+              <p style="font-family: 'Poppins', sans-serif">Marca/Modelo: {{ vehiculo.marca }}/{{ vehiculo.modelo }}</p>
+              <h1 style="font-family: 'Poppins', sans-serif; color: #FF7A00">Estado: {{ vehiculo.estadoRenta }}</h1>
+            </template>
+          </Card>
+        </div>
+      </div>
+      <h2 v-else style="font-family: 'Poppins', sans-serif; color: black;" >No tiene vehículos alquilados actualmente.</h2>
     </div>
   </div>
 
@@ -158,5 +130,11 @@ export default {
 
 .custom-toolbar {
   border-bottom: 2px solid #ddd;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los items se muevan a la siguiente línea cuando no hay suficiente espacio */
+  gap: 10px; /* Espacio entre los items */
 }
 </style>

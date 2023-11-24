@@ -3,14 +3,6 @@ import PropietarioService from "@/AutoYa/services/propietario.service";
 export default {
   data(){
     return {
-      user: {
-        name: '',
-        lastName: '',
-        photo: localStorage.getItem("fotoOwner"),
-        phone: '',
-        email: '',
-        birthday: '',
-      },
       drawer: false,
       items: [
         { label: "Inicio", to: "/init-propie" },
@@ -18,41 +10,51 @@ export default {
         { label: "Notificaciones", to: "/notifications" },
         { label: "Alquiler", to: "/rent-owner" },
       ],
+      nombres: '',
+      apellidos: '',
+      celular: '',
+      fechaNacimiento: '',
+      fotoPerfil: '',
     };
   },
   methods: {
-    async cargarInformacionPropietario() {
+    async actualizarDatosOwner() {
+      const propietarioId = parseInt(localStorage.getItem("propietarioId"));
+
+      if (!propietarioId) {
+        // Manejar el caso en que no haya un propietarioId en el localStorage
+        return;
+      }
+
       try {
-        const response = await PropietarioService.getAll();
+        const response2 = await PropietarioService.getAll();
         // Filtrar la información del propietario por el id almacenado en localStorage
-        const propietario = response.data.find(
+        const propietario = response2.data.find(
             (propietario) =>
-                propietario.id === parseInt(localStorage.getItem("propietarioId"))
+                propietario.id === propietarioId
         );
 
-        if (propietario) {
-          this.user.name = propietario.nombres;
-          this.user.lastName = propietario.apellidos;
-          this.user.phone = propietario.telefono;
-          this.user.email = propietario.correo;
-          this.user.birthday = propietario.fechaNacimiento;
-        }
+        const response = await PropietarioService.update(propietarioId, {
+          nombres: this.nombres,
+          apellidos: this.apellidos,
+          fechaNacimiento: this.fechaNacimiento,
+          telefono: this.celular,
+          correo: propietario.correo,
+          contrasenia: propietario.contrasenia,
+        });
+
+        localStorage.setItem("fotoOwner", this.fotoPerfil);
+
+        // Puedes manejar la respuesta según tus necesidades
+        console.log("Respuesta del servicio de propietario:", response);
+        this.$toast.add({ severity: 'success', summary: 'Éxito', detail: 'Información actualizada exitosamente.' });
+        this.$router.push('/profile-owner');
       } catch (error) {
-        console.error("Error al cargar la información del propietario:", error);
+        // Puedes manejar el error según tus necesidades
+        console.error("Error al actualizar datos del propietario:", error);
       }
     },
-    cerrarSesion() {
-      // Redirección a /login
-      this.$router.push('/login');
-      // Limpiar el localStorage
-      localStorage.setItem("propietarioId", null);
-      localStorage.setItem("fotoOwner", "https://i.postimg.cc/Fs9Z3g3V/usuario-1.png")
-    },
-  },
-  created() {
-    // Cargar la información del propietario al montar el componente
-    this.cargarInformacionPropietario();
-  },
+  }
 };
 </script>
 
@@ -95,41 +97,19 @@ export default {
       </template>
     </pv-toolbar>
   </header>
-  <body>
-  <div class="profile-container">
-    <div class="left-column">
-      <div class="title">
-        <h1>Perfil del Usuario</h1>
-        <h2>Propietario</h2>
-      </div>
-      <div class="profile-info">
-        <h2>Nombres: </h2>
-        <h2>{{ user.name }}</h2><br>
-        <h2>Apellidos: </h2>
-        <h2>{{user.lastName}}</h2><br>
-        <h2>Celular: </h2>
-        <h2>{{user.phone}}</h2><br>
-        <h2>Correo: </h2>
-        <h2>{{user.email}}</h2><br>
-        <h2>Fecha de nacimiento: </h2>
-        <h2>{{user.birthday}}</h2><br>
-      </div>
-      <div class="buttons">
-        <router-link to="/update-owner">
-          <pv-button class="font-button">Actualizar datos</pv-button><br>
-        </router-link>
-
-        <pv-button class="font-button" @click="cerrarSesion">Cerrar Sesión</pv-button>
-      </div>
-    </div>
-    <div class="right-column">
-      <div class="profile-image-container">
-        <div class="profile-image">
-          <img :src="user.photo" alt="Profile Picture" class="size-photo"/>
-        </div>
-      </div>
-    </div>
-  </div>
+  <body class="center-container" style="margin-top: 100px;">
+    <h1 style="color: #FF7A00;">Actualice sus datos</h1>
+    <h2>Nombres</h2><br>
+    <pv-input placeholder="Nombres" v-model="nombres" style="font-family: 'Poppins',sans-serif"></pv-input><br>
+    <h2>Apellidos</h2><br>
+    <pv-input placeholder="Apellidos" v-model="apellidos" style="font-family: 'Poppins',sans-serif"></pv-input><br>
+    <h2>Celular</h2><br>
+    <pv-input placeholder="Celular" v-model="celular" style="font-family: 'Poppins',sans-serif"></pv-input><br>
+    <h2>Fecha de nacimiento</h2><br>
+    <pv-input placeholder="Fecha de nacimiento" v-model="fechaNacimiento" style="font-family: 'Poppins',sans-serif"></pv-input><br>
+    <h2>URL foto de perfil</h2><br>
+    <pv-input placeholder="Foto de perfil" v-model="fotoPerfil" style="font-family: 'Poppins',sans-serif"></pv-input><br>
+    <Button label="Actualizar datos" class="custom-button2" @click="actualizarDatosOwner">Actualizar</Button>
   </body>
 </template>
 
@@ -236,6 +216,15 @@ body{
 
 h2, p {
   display: inline;
+  margin: 0;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% de la altura de la ventana */
   margin: 0;
 }
 </style>
