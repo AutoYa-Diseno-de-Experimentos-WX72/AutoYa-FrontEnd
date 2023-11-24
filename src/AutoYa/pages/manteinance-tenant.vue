@@ -56,8 +56,7 @@
         <template #title></template>
         <template #content>
           <p style="font-family: 'Poppins',sans-serif">Seleccionar nombre del propietario del auto alquilado</p>
-          <Dropdown :options="userOptions" v-model="selectedUser" placeholder="Selecciona un usuario" />
-          <Button class="custom-button3">Buscar</Button>
+          <Dropdown :options="userOptions" v-model="selectedUser" placeholder="Selecciona un propietario" />
           <Card>
             <template #title></template>
             <template #content>
@@ -70,7 +69,7 @@
 
               <div class="button-container">
                 <Button class="custom-button3">Agregar Fotos</Button>
-                <Button class="custom-button3">Enviar</Button>
+                <Button class="custom-button3" @click="enviarSolicitud">Enviar</Button>
               </div>
             </template>
           </Card>
@@ -85,6 +84,8 @@
 import Card from "primevue/card";
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
+import VehiculoService from "@/AutoYa/services/vehiculo.service";
+import PropietarioService from "@/AutoYa/services/propietario.service";
 export default{
   components: {
     Card,
@@ -99,13 +100,8 @@ export default{
         { label: "Buscar Autos", to: "/car-search-tenant" },
         { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: "Solicitudes", to: "/requests-tenant" },
       ],
-      userOptions: [
-        'Alonso Robles',
-        'Luis Isla',
-        'Erick Urbi',
-      ],
+      userOptions: [],
       selectedUser: null,
     };
   },
@@ -134,7 +130,46 @@ export default{
         }
       }
     },
+    enviarSolicitud() {
+      this.$toast.add({ severity: 'success', summary: 'Éxito', detail: 'Mensaje enviado al correo del propietario exitosamente.' });
+    },
   },
+  created() {
+    const arrendatarioId = parseInt(localStorage.getItem("arrendatarioId"));
+
+    console.log("arrendatarioId", localStorage.getItem("arrendatarioId"));
+
+    // Consultar vehículos alquilados por el arrendatario actual
+    VehiculoService.getAll()
+        .then((response) => {
+          const vehiculosAlquilados = response.data.filter(
+              (vehiculo) => vehiculo.arrendatario && vehiculo.arrendatario.id === arrendatarioId
+          );
+
+          console.log("va: ", vehiculosAlquilados);
+
+          // Obtener la lista de propietarios de los vehículos alquilados
+          const propietarioIds = [...new Set(vehiculosAlquilados.map((v) => v.propietario.id))];
+
+          console.log("propietarios: ", propietarioIds);
+
+          // Consultar detalles de propietarios
+          PropietarioService.getAll()
+              .then((propietariosResponse) => {
+                const propietarios = propietariosResponse.data.filter((p) => propietarioIds.includes(p.id));
+
+                // Crear opciones para el Dropdown con nombres y apellidos de propietarios
+                this.userOptions = propietarios.map((propietario) => `${propietario.nombres} ${propietario.apellidos}`);
+                console.log("userop: ", this.userOptions);
+              })
+              .catch((error) => {
+                console.error("Error al obtener detalles de propietarios:", error);
+              });
+        })
+        .catch((error) => {
+          console.error("Error al obtener vehículos alquilados:", error);
+        });
+  }
 };
 </script>
 

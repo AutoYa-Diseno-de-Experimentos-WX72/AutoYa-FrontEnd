@@ -24,7 +24,7 @@ export default {
     subirContrato() {
       localStorage.setItem("urlContrato", this.urlContrato);
       // Puedes agregar más lógica aquí si es necesario
-      console.log('Contrato subido exitosamente.');
+      this.$toast.add({ severity: 'success', summary: 'Éxito', detail: 'Contrato subido exitosamente.' });
       console.log(localStorage.getItem("urlContrato"));
     },
   },

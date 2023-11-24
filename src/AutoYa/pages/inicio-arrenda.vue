@@ -50,7 +50,11 @@
         <div class="input-button-container">
           <div class="input-container">
             <input type="text" id="ubicacion" placeholder="Surco - Lima, Perú">
-            <button class="search-button">Buscar un auto</button>
+
+            <router-link to="/car-search-tenant">
+              <button class="search-button">Buscar un auto</button>
+            </router-link>
+
           </div>
         </div>
       </div>
@@ -135,7 +139,6 @@ export default{
         { label: "Buscar Autos", to: "/car-search-tenant" },
         { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: "Solicitudes", to: "/requests-tenant" },
       ],
       cardCount: 4,
     };

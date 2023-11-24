@@ -1,14 +1,14 @@
 <script>
+import ArrendatarioService from "@/AutoYa/services/arrendatario.service";
 export default {
   data(){
     return {
       user: {
-        name: 'Name of the user',
-        lastName: 'LastName of the user',
-        photo: 'https://i.postimg.cc/Fs9Z3g3V/usuario-1.png',
-        phone: 'Number of the user',
-        email: 'Email of the user',
-        numberofcars: 'Quantity of cars'
+        name: '',
+        lastName: '',
+        photo: localStorage.getItem("fotoTenant"),
+        phone: '',
+        email: ''
       },
       drawer: false,
       items: [
@@ -16,9 +16,42 @@ export default {
         { label: "Buscar Autos", to: "/car-search-tenant" },
         { label: "Mantenimiento", to: "/manteinance-tenant" },
         { label: "Alquiler", to: "/rent-tenant" },
-        { label: 'Solicitudes', to: '/requests-tenant'},
       ],
     };
+  },
+  methods: {
+    async cargarInformacionArrendatario() {
+      try {
+        const response = await ArrendatarioService.getAll();
+
+        // Filtrar la información del arrendatario por el id almacenado en localStorage
+        const arrendatario = response.data.find(
+            (arrendatario) =>
+                arrendatario.id === parseInt(localStorage.getItem("arrendatarioId"))
+        );
+
+        if (arrendatario) {
+          this.user.name = arrendatario.nombres;
+          this.user.lastName = arrendatario.apellidos;
+          this.user.phone = arrendatario.telefono;
+          this.user.email = arrendatario.correo;
+          this.user.birthday = arrendatario.fechaNacimiento;
+        }
+      } catch (error) {
+        console.error("Error al cargar la información del propietario:", error);
+      }
+    },
+    cerrarSesion() {
+      // Redirección a /login
+      this.$router.push('/login');
+      // Limpiar el localStorage
+      localStorage.setItem("arrendatarioId", null);
+      localStorage.setItem("fotoTenant", "https://i.postimg.cc/Fs9Z3g3V/usuario-1.png")
+    },
+  },
+  created() {
+    // Cargar la información del arrendatario al montar el componente
+    this.cargarInformacionArrendatario();
   },
 };
 </script>
@@ -67,24 +100,25 @@ export default {
     <div class="left-column">
       <div class="title">
         <h1>Perfil del Usuario</h1>
-        <p>Arrendatario</p>
+        <h2>Arrendatario</h2>
       </div>
       <div class="profile-info">
         <h2>Nombres: </h2>
-        <p>{{ user.name }}</p><br>
+        <h2>{{ user.name }}</h2><br>
         <h2>Apellidos: </h2>
-        <p>{{user.lastName}}</p><br>
+        <h2>{{user.lastName}}</h2><br>
         <h2>Celular: </h2>
-        <p>{{user.phone}}</p><br>
+        <h2>{{user.phone}}</h2><br>
         <h2>Correo: </h2>
-        <p>{{user.email}}</p><br>
-        <h2>Can. de veh. alquilados: </h2>
-        <p>{{user.numberofcars}}</p>
+        <h2>{{user.email}}</h2><br>
       </div>
       <div class="buttons">
-        <pv-button class="font-button">Actualizar Datos</pv-button><br>
-        <pv-button class="font-button">Subir documento de Antecedentes Penales</pv-button><br>
-        <pv-button class="font-button">Cerrar Sesión</pv-button>
+
+        <router-link to="/update-tenant">
+          <pv-button class="font-button">Actualizar Datos</pv-button><br>
+        </router-link>
+
+        <pv-button class="font-button" @click="cerrarSesion">Cerrar Sesión</pv-button>
       </div>
     </div>
     <div class="right-column">
@@ -93,9 +127,6 @@ export default {
           <img :src="user.photo" alt="Profile Picture" class="size-photo"/>
         </div>
         <br>
-        <div class="profile-button">
-          <pv-button class="font-button">Cambiar Foto de Perfil</pv-button>
-        </div>
       </div>
     </div>
   </div>
